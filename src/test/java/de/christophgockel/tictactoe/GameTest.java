@@ -10,15 +10,13 @@ public class GameTest {
   private FakePlayer playerOne;
   private FakePlayer playerTwo;
   private FakeBoard board;
-  private Input input;
   private FakeOutput output;
   private Game game;
 
   @Before
   public void setup() {
-    input     = new DummyInput();
-    playerOne = new FakePlayer(Mark.X, input);
-    playerTwo = new FakePlayer(Mark.O, input);
+    playerOne = new FakePlayer(Mark.X);
+    playerTwo = new FakePlayer(Mark.O);
     board     = new FakeBoard();
     output    = new FakeOutput();
 
@@ -70,17 +68,10 @@ public class GameTest {
     assertTrue(playerTwo.nextMoveHasBeenCalled);
   }
 
-  private class DummyInput implements Input {
-    @Override
-    public int getMove() {
-      return 0;
-    }
-  }
-
   private class FakePlayer implements Player {
     public boolean nextMoveHasBeenCalled;
 
-    public FakePlayer(Mark mark, Input input) {
+    public FakePlayer(Mark mark) {
       nextMoveHasBeenCalled = false;
     }
 
