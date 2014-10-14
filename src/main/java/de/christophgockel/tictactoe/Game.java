@@ -1,14 +1,14 @@
 package de.christophgockel.tictactoe;
 
 public class Game {
-  private Player playerOne;
-  private Player playerTwo;
+  private Player currentPlayer;
+  private Player otherPlayer;
   private Board board;
   private Output output;
 
   public Game(Player playerOne, Player playerTwo, Board board, Output output) {
-    this.playerOne = playerOne;
-    this.playerTwo = playerTwo;
+    this.currentPlayer = playerOne;
+    this.otherPlayer = playerTwo;
     this.board = board;
     this.output = output;
 
@@ -17,7 +17,7 @@ public class Game {
 
   public void nextRound() {
     if (board.isPlayable()) {
-      board = playerOne.nextMove(board);
+      board = currentPlayer.nextMove(board);
 
       updateOutput();
 
@@ -30,19 +30,19 @@ public class Game {
   private void updateOutput() {
     output.show(board);
 
-    if (board.isWinner(playerOne.getMark())) {
-      output.showWinner(playerOne.getMark());
-    } else if (board.isWinner(playerTwo.getMark())){
-      output.showWinner(playerTwo.getMark());
+    if (board.isWinner(currentPlayer.getMark())) {
+      output.showWinner(currentPlayer.getMark());
+    } else if (board.isWinner(otherPlayer.getMark())){
+      output.showWinner(otherPlayer.getMark());
     } else {
       output.showDraw();
     }
   }
 
   private void switchPlayers() {
-    Player temp = playerOne;
-    playerOne = playerTwo;
-    playerTwo = temp;
+    Player previousPlayer = currentPlayer;
+    currentPlayer = otherPlayer;
+    otherPlayer = previousPlayer;
   }
 
   public class Over extends RuntimeException {
