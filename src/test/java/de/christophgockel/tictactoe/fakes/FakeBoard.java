@@ -10,11 +10,14 @@ public class FakeBoard implements Board {
   public boolean isPlayableHasBeenCalled;
   public boolean isPlayable;
   public List<Boolean> isWinnerValues;
+  public boolean setMoveHasBeenCalled;
+  public int lastMove;
 
   public FakeBoard() {
     isPlayableHasBeenCalled = false;
     isPlayable = true;
     isWinnerValues = new ArrayList<Boolean>();
+    setMoveHasBeenCalled = false;
   }
 
   public void setIsWinnerReturnValues(boolean... values) {
@@ -38,5 +41,13 @@ public class FakeBoard implements Board {
     } catch (IndexOutOfBoundsException e) {
       return false;
     }
+  }
+
+  @Override
+  public Board setMove(int move, Mark mark) {
+    setMoveHasBeenCalled = true;
+    lastMove = move;
+
+    return this;
   }
 }
