@@ -19,9 +19,23 @@ public class Game {
     if (board.isPlayable()) {
       board = playerOne.nextMove(board);
 
-      output.show(board);
+      updateOutput();
 
       switchPlayers();
+    } else {
+      throw new Over();
+    }
+  }
+
+  private void updateOutput() {
+    output.show(board);
+
+    if (board.isWinner(playerOne.getMark())) {
+      output.showWinner(playerOne.getMark());
+    } else if (board.isWinner(playerTwo.getMark())){
+      output.showWinner(playerTwo.getMark());
+    } else {
+      output.showDraw();
     }
   }
 
@@ -29,5 +43,8 @@ public class Game {
     Player temp = playerOne;
     playerOne = playerTwo;
     playerTwo = temp;
+  }
+
+  public class Over extends RuntimeException {
   }
 }

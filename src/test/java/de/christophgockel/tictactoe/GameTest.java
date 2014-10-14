@@ -3,7 +3,10 @@ package de.christophgockel.tictactoe;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GameTest {
@@ -19,6 +22,8 @@ public class GameTest {
     playerTwo = new FakePlayer(Mark.O);
     board     = new FakeBoard();
     output    = new FakeOutput();
+
+    board.setIsWinnerReturnValues(false);
 
     game = new Game(playerOne, playerTwo, board, output);
   }
@@ -43,16 +48,7 @@ public class GameTest {
   }
 
   @Test
-  public void doesNotAskThePlayerForItsNextMoveWhenNotPlayable() {
-    board.isPlayable = false;
-    game.nextRound();
-
-    assertFalse(playerOne.nextMoveHasBeenCalled);
-  }
-
-  @Test
   public void displaysTheBoardAfterRoundHasBeenPlayed() {
-    board.isPlayable = true;
     output.showBoardHasBeenCalled = false;
     game.nextRound();
 
@@ -61,17 +57,61 @@ public class GameTest {
 
   @Test
   public void switchesPlayersAfterRounds() {
-    board.isPlayable = true;
+    board.setIsWinnerReturnValues(false, false);
     game.nextRound();
     game.nextRound();
 
     assertTrue(playerTwo.nextMoveHasBeenCalled);
   }
 
+  @Test
+  public void printsWinningMessageWhenThereIsAWinner() {
+    board.setIsWinnerReturnValues(true);
+
+    game.nextRound();
+
+    assertTrue(output.showWinnerHasBeenCalled);
+  }
+
+  @Test
+  public void printsWinningMessageWhenPlayerOneIsWinner() {
+    board.setIsWinnerReturnValues(true);
+
+    game.nextRound();
+
+    assertEquals(playerOne.getMark(), output.announcedWinner);
+  }
+
+  @Test
+  public void printsWinningMessageWhenPlayerTwoIsWinner() {
+    board.setIsWinnerReturnValues(false, true);
+
+    game.nextRound();
+
+    assertEquals(playerTwo.getMark(), output.announcedWinner);
+  }
+
+  @Test
+  public void printsDrawMessageWhenThereIsNoWinner() {
+    board.setIsWinnerReturnValues(false, false);
+
+    game.nextRound();
+
+    assertTrue(output.announcedDraw);
+  }
+
+  @Test (expected = Game.Over.class)
+  public void throwsWhenTryingToPlayFinishedGame() {
+    board.isPlayable = false;
+    game.nextRound();
+  }
+
   private class FakePlayer implements Player {
     public boolean nextMoveHasBeenCalled;
+    private Mark mark;
 
     public FakePlayer(Mark mark) {
+      this.mark = mark;
       nextMoveHasBeenCalled = false;
     }
 
@@ -80,34 +120,74 @@ public class GameTest {
       nextMoveHasBeenCalled = true;
       return board;
     }
+
+    @Override
+    public Mark getMark() {
+      return mark;
+    }
   }
 
   private class FakeOutput implements Output {
     public boolean showBoardHasBeenCalled;
+    public boolean showWinnerHasBeenCalled;
+    public Mark announcedWinner;
+    public boolean announcedDraw;
 
     public FakeOutput() {
       showBoardHasBeenCalled = false;
+      showWinnerHasBeenCalled = false;
+      announcedDraw = false;
     }
 
     @Override
     public void show(Board board) {
       showBoardHasBeenCalled = true;
     }
+
+    @Override
+    public void showWinner(Mark mark) {
+      showWinnerHasBeenCalled = true;
+      announcedWinner = mark;
+    }
+
+    @Override
+    public void showDraw() {
+      announcedDraw = true;
+    }
   }
 
   private class FakeBoard implements Board {
     public boolean isPlayableHasBeenCalled;
     public boolean isPlayable;
+    public List<Boolean> isWinnerValues;
 
     public FakeBoard() {
       isPlayableHasBeenCalled = false;
-      isPlayable = false;
+      isPlayable = true;
+      isWinnerValues = new ArrayList<Boolean>();
+    }
+
+    public void setIsWinnerReturnValues(boolean... values) {
+      isWinnerValues.clear();
+
+      for (boolean value : values) {
+        isWinnerValues.add(value);
+      }
     }
 
     @Override
     public boolean isPlayable() {
       isPlayableHasBeenCalled = true;
       return isPlayable;
+    }
+
+    @Override
+    public boolean isWinner(Mark mark) {
+      try {
+        return isWinnerValues.remove(0);
+      } catch (IndexOutOfBoundsException e) {
+        return false;
+      }
     }
   }
 }
