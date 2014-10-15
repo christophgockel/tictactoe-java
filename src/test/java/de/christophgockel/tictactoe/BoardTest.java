@@ -127,6 +127,22 @@ public class BoardTest {
     assertTrue(board.isWinner(Mark.O));
   }
 
+  @Test (expected = Board.InvalidMove.class)
+  public void throwsExceptionWhenPlacingInvalidMove_lowerBound() {
+    board.setMove(0, Mark.O);
+  }
+
+  @Test (expected = Board.InvalidMove.class)
+  public void throwsExceptionWhenPlacingInvalidMove_upperBound() {
+    board.setMove(10, Mark.O);
+  }
+
+  @Test (expected = Board.InvalidMove.class)
+  public void throwsExceptionWhenPlacingInvalidMove_alreadyOccupiedSpot() {
+    board.setMove(2, Mark.O);
+    board.setMove(2, Mark.X);
+  }
+
   private void prepareFullBoard() {
     board.setMove(1, Mark.X);
     board.setMove(2, Mark.X);

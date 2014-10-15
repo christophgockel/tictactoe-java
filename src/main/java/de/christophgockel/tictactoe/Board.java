@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Board {
+  public class InvalidMove extends RuntimeException {
+  }
+
   private final int SIZE = 9;
   private final List<Mark> cells;
 
@@ -32,7 +35,18 @@ public class Board {
   }
 
   public Board setMove(int move, Mark mark) {
-    cells.set(move - 1, mark);
+    int convertedMove = move - 1;
+
+    if (convertedMove < 0 || convertedMove >= SIZE) {
+      throw new InvalidMove();
+    }
+
+    if (cells.get(convertedMove) == null) {
+      cells.set(convertedMove, mark);
+    } else {
+      throw new InvalidMove();
+    }
+
     return new Board(new ArrayList<Mark>(cells));
   }
 
