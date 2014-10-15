@@ -105,4 +105,10 @@ public class GameTest {
     board.isPlayable = false;
     game.nextRound();
   }
+
+  @Test
+  public void asksTheBoardIfItIsPlayable() {
+    game.isPlayable();
+    assertTrue(board.isPlayableHasBeenCalled);
+  }
 }

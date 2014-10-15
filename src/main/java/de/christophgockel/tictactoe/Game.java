@@ -27,6 +27,10 @@ public class Game {
     }
   }
 
+  public boolean isPlayable() {
+    return board.isPlayable();
+  }
+
   private void updateOutput() {
     output.show(board);
 
