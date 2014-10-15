@@ -6,7 +6,7 @@ import de.christophgockel.tictactoe.Mark;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakeBoard implements Board {
+public class FakeBoard extends Board {
   public boolean isPlayableHasBeenCalled;
   public boolean isPlayable;
   public List<Boolean> isWinnerValues;
