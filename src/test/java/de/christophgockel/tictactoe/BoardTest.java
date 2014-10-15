@@ -56,6 +56,15 @@ public class BoardTest {
   }
 
   @Test
+  public void knowsWhenThereIsAWinner() {
+    board.setMove(1, Mark.X);
+    board.setMove(2, Mark.X);
+    board.setMove(3, Mark.X);
+
+    assertTrue(board.hasWinner());
+  }
+
+  @Test
   public void knowsWinningConditionForFirstRow() {
     board.setMove(1, Mark.X);
     board.setMove(2, Mark.X);
@@ -141,6 +150,15 @@ public class BoardTest {
   public void throwsExceptionWhenPlacingInvalidMove_alreadyOccupiedSpot() {
     board.setMove(2, Mark.O);
     board.setMove(2, Mark.X);
+  }
+
+  @Test
+  public void isNotPlayableWhenWinnerIsAvailable() {
+    board.setMove(1, Mark.O);
+    board.setMove(4, Mark.O);
+    board.setMove(7, Mark.O);
+
+    assertFalse(board.isPlayable());
   }
 
   private void prepareFullBoard() {

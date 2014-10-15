@@ -21,7 +21,7 @@ public class Board {
   }
 
   public boolean isPlayable() {
-    return emptyCellCount() > 0;
+    return emptyCellCount() > 0 && !hasWinner();
   }
 
   public boolean isWinner(Mark mark) {
@@ -31,6 +31,15 @@ public class Board {
       }
     }
 
+    return false;
+  }
+
+  public boolean hasWinner() {
+    for (Line line : getLineCombinations()) {
+      if (line.containsOnlySame()) {
+        return true;
+      }
+    }
     return false;
   }
 
@@ -78,10 +87,24 @@ public class Board {
 
   private List<Line> getRows() {
     List<Line> rows = new ArrayList<Line>();
+    List<Mark> cellsForRows = new ArrayList<Mark>();
 
-    rows.add(new Line(cells.subList(0, 2)));
-    rows.add(new Line(cells.subList(3, 5)));
-    rows.add(new Line(cells.subList(6, 8)));
+    cellsForRows.add(cells.get(0));
+    cellsForRows.add(cells.get(1));
+    cellsForRows.add(cells.get(2));
+    rows.add(new Line(new ArrayList<Mark>(cellsForRows)));
+
+    cellsForRows.clear();
+    cellsForRows.add(cells.get(3));
+    cellsForRows.add(cells.get(4));
+    cellsForRows.add(cells.get(5));
+    rows.add(new Line(new ArrayList<Mark>(cellsForRows)));
+
+    cellsForRows.clear();
+    cellsForRows.add(cells.get(6));
+    cellsForRows.add(cells.get(7));
+    cellsForRows.add(cells.get(8));
+    rows.add(new Line(new ArrayList<Mark>(cellsForRows)));
 
     return rows;
   }
@@ -143,6 +166,17 @@ public class Board {
       }
 
       return true;
+    }
+
+    public boolean containsOnlySame() {
+      boolean same = false;
+
+      for (Mark mark : Mark.values()) {
+        if (containsOnly(mark)) {
+          same = true;
+        }
+      }
+      return same;
     }
   }
 }
