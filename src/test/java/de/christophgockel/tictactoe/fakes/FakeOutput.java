@@ -9,11 +9,13 @@ public class FakeOutput implements Output {
   public boolean showWinnerHasBeenCalled;
   public Mark announcedWinner;
   public boolean announcedDraw;
+  public boolean showNextPlayerHasBeenCalled;
 
   public FakeOutput() {
     showBoardHasBeenCalled = false;
     showWinnerHasBeenCalled = false;
     announcedDraw = false;
+    showNextPlayerHasBeenCalled = false;
   }
 
   @Override
@@ -30,5 +32,10 @@ public class FakeOutput implements Output {
   @Override
   public void showDraw() {
     announcedDraw = true;
+  }
+
+  @Override
+  public void showNextPlayer(Mark mark) {
+    showNextPlayerHasBeenCalled = true;
   }
 }

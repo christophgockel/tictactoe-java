@@ -53,4 +53,9 @@ public class CommandlineIO implements Output, Input {
   public void showDraw() {
     output.println("Game ended in a draw.");
   }
+
+  @Override
+  public void showNextPlayer(Mark mark) {
+    output.println("Next Player: " + mark);
+  }
 }

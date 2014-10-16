@@ -86,4 +86,16 @@ public class CommandlineIOTest {
   private String stdout() {
     return output.toString();
   }
+
+  @Test
+  public void announcesNextPlayerX() {
+    io.showNextPlayer(Mark.X);
+    assertThat(stdout(), containsString("Next Player: X"));
+  }
+
+  @Test
+  public void announcesNextPlayerO() {
+    io.showNextPlayer(Mark.O);
+    assertThat(stdout(), containsString("Next Player: O"));
+  }
 }
