@@ -8,45 +8,64 @@ import java.util.List;
 
 public class FakeBoard extends Board {
   public boolean isPlayableHasBeenCalled;
-  public boolean isPlayable;
-  public List<Boolean> isWinnerValues;
+  public List<Boolean> isPlayableValues;
+  public List<Boolean> hasWinnerValues;
   public boolean setMoveHasBeenCalled;
   public int lastMove;
+  public Mark lastMarkPlayed;
 
   public FakeBoard() {
     isPlayableHasBeenCalled = false;
-    isPlayable = true;
-    isWinnerValues = new ArrayList<Boolean>();
+    isPlayableValues = new ArrayList<Boolean>();
+    hasWinnerValues = new ArrayList<Boolean>();
     setMoveHasBeenCalled = false;
   }
 
-  public void setIsWinnerReturnValues(boolean... values) {
-    isWinnerValues.clear();
+  public void setHasWinnerReturnValues(boolean... values) {
+    hasWinnerValues.clear();
 
     for (boolean value : values) {
-      isWinnerValues.add(value);
+      hasWinnerValues.add(value);
+    }
+  }
+
+  public void setIsPlayableValues(boolean... values) {
+    isPlayableValues.clear();
+
+    for (boolean value : values) {
+      isPlayableValues.add(value);
     }
   }
 
   @Override
   public boolean isPlayable() {
-    isPlayableHasBeenCalled = true;
-    return isPlayable;
+    try {
+      isPlayableHasBeenCalled = true;
+      return isPlayableValues.remove(0);
+    } catch (IndexOutOfBoundsException e) {
+      return true;
+    }
   }
 
   @Override
-  public boolean isWinner(Mark mark) {
+  public boolean hasWinner() {
     try {
-      return isWinnerValues.remove(0);
+      return hasWinnerValues.remove(0);
     } catch (IndexOutOfBoundsException e) {
       return false;
     }
   }
 
   @Override
+  public Mark getWinner() {
+    return lastMarkPlayed;
+  }
+
+  @Override
   public Board setMove(int move, Mark mark) {
     setMoveHasBeenCalled = true;
     lastMove = move;
+    lastMarkPlayed = mark;
 
     return this;
   }

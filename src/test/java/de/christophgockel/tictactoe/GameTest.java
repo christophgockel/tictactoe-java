@@ -23,7 +23,7 @@ public class GameTest {
     board     = new FakeBoard();
     output    = new FakeOutput();
 
-    board.setIsWinnerReturnValues(false);
+    board.setHasWinnerReturnValues(false);
 
     game = new Game(playerOne, playerTwo, board, output);
   }
@@ -41,7 +41,7 @@ public class GameTest {
 
   @Test
   public void asksThePlayerForItsNextMoveWhenPlayable() {
-    board.isPlayable = true;
+    board.setIsPlayableValues(true);
     game.nextRound();
 
     assertTrue(playerOne.nextMoveHasBeenCalled);
@@ -57,7 +57,7 @@ public class GameTest {
 
   @Test
   public void switchesPlayersAfterRounds() {
-    board.setIsWinnerReturnValues(false, false);
+    board.setHasWinnerReturnValues(false, false);
     game.nextRound();
     game.nextRound();
 
@@ -66,7 +66,7 @@ public class GameTest {
 
   @Test
   public void printsWinningMessageWhenThereIsAWinner() {
-    board.setIsWinnerReturnValues(true);
+    board.setHasWinnerReturnValues(true);
 
     game.nextRound();
 
@@ -75,7 +75,7 @@ public class GameTest {
 
   @Test
   public void printsWinningMessageWhenPlayerOneIsWinner() {
-    board.setIsWinnerReturnValues(true);
+    board.setHasWinnerReturnValues(true);
 
     game.nextRound();
 
@@ -84,8 +84,9 @@ public class GameTest {
 
   @Test
   public void printsWinningMessageWhenPlayerTwoIsWinner() {
-    board.setIsWinnerReturnValues(false, true);
+    board.setHasWinnerReturnValues(false, true);
 
+    game.nextRound();
     game.nextRound();
 
     assertEquals(playerTwo.getMark(), output.announcedWinner);
@@ -93,7 +94,8 @@ public class GameTest {
 
   @Test
   public void printsDrawMessageWhenThereIsNoWinner() {
-    board.setIsWinnerReturnValues(false, false);
+    board.setHasWinnerReturnValues(false, false);
+    board.setIsPlayableValues(true, false);
 
     game.nextRound();
 
@@ -102,7 +104,7 @@ public class GameTest {
 
   @Test (expected = Game.Over.class)
   public void throwsWhenTryingToPlayFinishedGame() {
-    board.isPlayable = false;
+    board.setIsPlayableValues(false);
     game.nextRound();
   }
 
@@ -110,5 +112,11 @@ public class GameTest {
   public void asksTheBoardIfItIsPlayable() {
     game.isPlayable();
     assertTrue(board.isPlayableHasBeenCalled);
+  }
+
+  @Test
+  public void announcesNextPlayerAsLongAsGameIsRunning() {
+    game.nextRound();
+    assertTrue(output.showNextPlayerHasBeenCalled);
   }
 }

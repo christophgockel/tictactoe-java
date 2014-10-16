@@ -16,7 +16,7 @@ public class FakePlayer implements Player {
   @Override
   public Board nextMove(Board board) {
     nextMoveHasBeenCalled = true;
-    return board;
+    return board.setMove(0, mark);
   }
 
   @Override

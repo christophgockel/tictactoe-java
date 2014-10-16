@@ -70,7 +70,7 @@ public class BoardTest {
     board.setMove(2, Mark.X);
     board.setMove(3, Mark.X);
 
-    assertTrue(board.isWinner(Mark.X));
+    assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
@@ -79,7 +79,7 @@ public class BoardTest {
     board.setMove(5, Mark.X);
     board.setMove(6, Mark.X);
 
-    assertTrue(board.isWinner(Mark.X));
+    assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
@@ -88,7 +88,7 @@ public class BoardTest {
     board.setMove(8, Mark.X);
     board.setMove(9, Mark.X);
 
-    assertTrue(board.isWinner(Mark.X));
+    assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
@@ -97,7 +97,7 @@ public class BoardTest {
     board.setMove(4, Mark.O);
     board.setMove(7, Mark.O);
 
-    assertTrue(board.isWinner(Mark.O));
+    assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
@@ -106,7 +106,7 @@ public class BoardTest {
     board.setMove(5, Mark.O);
     board.setMove(8, Mark.O);
 
-    assertTrue(board.isWinner(Mark.O));
+    assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
@@ -115,7 +115,7 @@ public class BoardTest {
     board.setMove(6, Mark.O);
     board.setMove(9, Mark.O);
 
-    assertTrue(board.isWinner(Mark.O));
+    assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
@@ -124,7 +124,7 @@ public class BoardTest {
     board.setMove(5, Mark.X);
     board.setMove(9, Mark.X);
 
-    assertTrue(board.isWinner(Mark.X));
+    assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
@@ -133,7 +133,7 @@ public class BoardTest {
     board.setMove(5, Mark.O);
     board.setMove(7, Mark.O);
 
-    assertTrue(board.isWinner(Mark.O));
+    assertEquals(Mark.O, board.getWinner());
   }
 
   @Test (expected = Board.InvalidMove.class)

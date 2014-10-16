@@ -24,16 +24,6 @@ public class Board {
     return emptyCellCount() > 0 && !hasWinner();
   }
 
-  public boolean isWinner(Mark mark) {
-    for (Line line : getLineCombinations()) {
-      if (line.containsOnly(mark)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   public boolean hasWinner() {
     for (Line line : getLineCombinations()) {
       if (line.containsOnlySame()) {
@@ -41,6 +31,19 @@ public class Board {
       }
     }
     return false;
+  }
+
+  public Mark getWinner() {
+    if (hasWinner()) {
+      for (Line line : getLineCombinations()) {
+        for (Mark mark : Mark.values()) {
+          if (line.containsOnly(mark)) {
+            return mark;
+          }
+        }
+      }
+    }
+    return null;
   }
 
   public Board setMove(int move, Mark mark) {

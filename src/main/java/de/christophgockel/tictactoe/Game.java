@@ -34,12 +34,14 @@ public class Game {
   private void updateOutput() {
     output.show(board);
 
-    if (board.isWinner(currentPlayer.getMark())) {
-      output.showWinner(currentPlayer.getMark());
-    } else if (board.isWinner(otherPlayer.getMark())){
-      output.showWinner(otherPlayer.getMark());
+    if (board.hasWinner()) {
+      output.showWinner(board.getWinner());
     } else {
-      output.showDraw();
+      if (board.isPlayable()) {
+        output.showNextPlayer(otherPlayer.getMark());
+      } else {
+        output.showDraw();
+      }
     }
   }
 
