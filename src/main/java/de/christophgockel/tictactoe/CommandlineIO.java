@@ -1,25 +1,27 @@
 package de.christophgockel.tictactoe;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.List;
 
 public class CommandlineIO implements Output, Input {
   private InputStream input;
   private PrintStream output;
 
+  private BufferedReader reader;
+
   public CommandlineIO(InputStream input, PrintStream output) {
     this.input = input;
     this.output = output;
+
+    this.reader = new BufferedReader(new InputStreamReader(input));
   }
 
   @Override
   public int getMove() {
-    output.print("Next move: ");
     try {
-      return input.read();
-    } catch (IOException e) {
+      output.print("Next move: ");
+      return Integer.parseInt(reader.readLine());
+    } catch (NumberFormatException | IOException e) {
       return 0;
     }
   }
@@ -29,7 +31,7 @@ public class CommandlineIO implements Output, Input {
     List<Mark> cells = board.getCells();
     String template = " 1 | 2 | 3 " + "\n" +
                       " 4 | 5 | 6 " + "\n" +
-                      " 7 | 8 | 9 ";
+                      " 7 | 8 | 9 " + "\n";
 
     for (int i = 0; i < cells.size(); i++) {
       Mark cell = cells.get(i);

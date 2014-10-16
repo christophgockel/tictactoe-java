@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.*;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -12,11 +13,10 @@ import static org.junit.Assert.assertThat;
 public class CommandlineIOTest {
   private CommandlineIO io;
   private ByteArrayOutputStream output;
-  private DummyInputStream input;
 
   @Before
   public void setup() throws IOException {
-    input = new DummyInputStream();
+    ByteArrayInputStream input = new ByteArrayInputStream("".getBytes(UTF_8));
     output = new ByteArrayOutputStream();
 
     io = new CommandlineIO(input, new PrintStream(output));
@@ -76,21 +76,14 @@ public class CommandlineIOTest {
   }
 
   @Test
-  public void getsNextMoveFromStdin() throws IOException {
-    input.valueToBeRead = 42;
+  public void getsNextMoveFromItsStandardInput() {
+    InputStream input = new ByteArrayInputStream("42".getBytes(UTF_8));
+    CommandlineIO io = new CommandlineIO(input, new PrintStream(output));
+
     assertEquals(42, io.getMove());
   }
 
   private String stdout() {
     return output.toString();
-  }
-
-  private class DummyInputStream extends InputStream {
-    public int valueToBeRead;
-
-    @Override
-    public int read() throws IOException {
-      return valueToBeRead;
-    }
   }
 }
