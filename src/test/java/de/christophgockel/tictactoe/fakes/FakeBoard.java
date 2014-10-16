@@ -63,6 +63,9 @@ public class FakeBoard extends Board {
 
   @Override
   public Board setMove(int move, Mark mark) {
+    if (move < 0) {
+      throw new InvalidMove();
+    }
     setMoveHasBeenCalled = true;
     lastMove = move;
     lastMarkPlayed = mark;

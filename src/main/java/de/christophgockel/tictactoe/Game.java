@@ -16,14 +16,18 @@ public class Game {
   }
 
   public void nextRound() {
-    if (board.isPlayable()) {
-      board = currentPlayer.nextMove(board);
+    try {
+      if (board.isPlayable()) {
+        board = currentPlayer.nextMove(board);
 
-      updateOutput();
+        updateOutput();
 
-      switchPlayers();
-    } else {
-      throw new Over();
+        switchPlayers();
+      } else {
+        throw new Over();
+      }
+    } catch (Board.InvalidMove invalidMove) {
+      output.showInvalidMoveMessage();
     }
   }
 

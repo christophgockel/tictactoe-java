@@ -98,4 +98,10 @@ public class CommandlineIOTest {
     io.showNextPlayer(Mark.O);
     assertThat(stdout(), containsString("Next Player: O"));
   }
+
+  @Test
+  public void showsAnInvalidMoveMessage() {
+    io.showInvalidMoveMessage();
+    assertThat(stdout(), containsString("Invalid move."));
+  }
 }

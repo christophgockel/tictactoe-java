@@ -58,4 +58,9 @@ public class CommandlineIO implements Output, Input {
   public void showNextPlayer(Mark mark) {
     output.println("Next Player: " + mark);
   }
+
+  @Override
+  public void showInvalidMoveMessage() {
+    output.println("Invalid move.");
+  }
 }

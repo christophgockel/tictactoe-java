@@ -10,12 +10,14 @@ public class FakeOutput implements Output {
   public Mark announcedWinner;
   public boolean announcedDraw;
   public boolean showNextPlayerHasBeenCalled;
+  public boolean showInvalidMoveMessageHasBeenCalled;
 
   public FakeOutput() {
     showBoardHasBeenCalled = false;
     showWinnerHasBeenCalled = false;
     announcedDraw = false;
     showNextPlayerHasBeenCalled = false;
+    showInvalidMoveMessageHasBeenCalled = false;
   }
 
   @Override
@@ -37,5 +39,10 @@ public class FakeOutput implements Output {
   @Override
   public void showNextPlayer(Mark mark) {
     showNextPlayerHasBeenCalled = true;
+  }
+
+  @Override
+  public void showInvalidMoveMessage() {
+    showInvalidMoveMessageHasBeenCalled = true;
   }
 }

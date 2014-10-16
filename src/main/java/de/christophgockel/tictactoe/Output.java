@@ -5,4 +5,5 @@ public interface Output {
   void showWinner(Mark mark);
   void showDraw();
   void showNextPlayer(Mark mark);
+  void showInvalidMoveMessage();
 }

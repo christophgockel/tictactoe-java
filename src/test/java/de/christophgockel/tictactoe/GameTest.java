@@ -119,4 +119,11 @@ public class GameTest {
     game.nextRound();
     assertTrue(output.showNextPlayerHasBeenCalled);
   }
+
+  @Test
+  public void placingAnInvalidMoveShowErrorMessage() {
+    playerOne.nextMoveToPlay = -1;
+    game.nextRound();
+    assertTrue(output.showInvalidMoveMessageHasBeenCalled);
+  }
 }
