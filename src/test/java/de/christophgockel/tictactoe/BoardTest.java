@@ -24,13 +24,6 @@ public class BoardTest {
   }
 
   @Test
-  public void boardIsNotEmptyAfterSettingAMove() {
-    List<Mark> emptyCells = list(null, null, null, null, null, null, null, null, null);
-    board.setMove(1, Mark.O);
-    assertNotEquals(emptyCells, board.getCells());
-  }
-
-  @Test
   public void moveIsPlacedOnBoard() {
     List<Mark> cells = list(null, null, Mark.X, null, null, null, null, null, null);
     board.setMove(3, Mark.X);

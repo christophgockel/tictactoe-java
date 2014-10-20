@@ -36,9 +36,9 @@ public class Board {
     cells = Arrays.asList(new Mark[size.getNumberOfCells()]);
   }
 
-  private Board(List<Mark> cells) {
-    this.cells = cells;
-    this.size = Size.ThreeByThree;
+  private Board(Board board) {
+    this.cells = new ArrayList<>(board.cells);
+    this.size = board.size;
   }
 
   public boolean isPlayable() {
@@ -80,7 +80,7 @@ public class Board {
       throw new InvalidMove();
     }
 
-    return new Board(new ArrayList<Mark>(cells));
+    return new Board(this);
   }
 
   public List<Mark> getCells() {
