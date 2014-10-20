@@ -1,23 +1,44 @@
 package de.christophgockel.tictactoe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Board {
   public class InvalidMove extends RuntimeException {
   }
 
-  private final int SIZE = 9;
+  public enum Size {
+    ThreeByThree(3), FourByFour(4);
+
+    private final int sideLength;
+
+    private Size(int sideLength) {
+      this.sideLength = sideLength;
+    }
+
+    public int getNumberOfCells() {
+      return sideLength * sideLength;
+    }
+
+    public int getSideLength() {
+      return sideLength;
+    }
+  }
+
+  private final Size size;
   private final List<Mark> cells;
 
   public Board() {
-    cells = Arrays.asList(new Mark[SIZE]);
+    this(Size.ThreeByThree);
+  }
+
+  public Board(Size size) {
+    this.size = size;
+    cells = Arrays.asList(new Mark[size.getNumberOfCells()]);
   }
 
   private Board(List<Mark> cells) {
     this.cells = cells;
+    this.size = Size.ThreeByThree;
   }
 
   public boolean isPlayable() {
@@ -49,7 +70,7 @@ public class Board {
   public Board setMove(int move, Mark mark) {
     int convertedMove = move - 1;
 
-    if (convertedMove < 0 || convertedMove >= SIZE) {
+    if (convertedMove < 0 || convertedMove >= size.getNumberOfCells()) {
       throw new InvalidMove();
     }
 
@@ -79,7 +100,7 @@ public class Board {
   }
 
   private List<Line> getLineCombinations() {
-    List<Line> lines = new ArrayList<Line>();
+    List<Line> lines = new ArrayList<>();
 
     lines.addAll(getRows());
     lines.addAll(getColumns());
@@ -89,67 +110,63 @@ public class Board {
   }
 
   private List<Line> getRows() {
-    List<Line> rows = new ArrayList<Line>();
-    List<Mark> cellsForRows = new ArrayList<Mark>();
+    List<Line> rows = new ArrayList<>();
 
-    cellsForRows.add(cells.get(0));
-    cellsForRows.add(cells.get(1));
-    cellsForRows.add(cells.get(2));
-    rows.add(new Line(new ArrayList<Mark>(cellsForRows)));
-
-    cellsForRows.clear();
-    cellsForRows.add(cells.get(3));
-    cellsForRows.add(cells.get(4));
-    cellsForRows.add(cells.get(5));
-    rows.add(new Line(new ArrayList<Mark>(cellsForRows)));
-
-    cellsForRows.clear();
-    cellsForRows.add(cells.get(6));
-    cellsForRows.add(cells.get(7));
-    cellsForRows.add(cells.get(8));
-    rows.add(new Line(new ArrayList<Mark>(cellsForRows)));
+    for (int i = 0; i < size.getSideLength(); i++) {
+      rows.add(getRow(i));
+    }
 
     return rows;
   }
 
+  private Line getRow(int index) {
+    List<Mark> marks = new ArrayList<>();
+
+    int start = index * size.getSideLength();
+    int end   = start + size.getSideLength();
+
+    for (int i = start; i < end; i++) {
+      marks.add(cells.get(i));
+    }
+
+    return new Line(marks);
+  }
+
   private List<Line> getColumns() {
-    List<Line> columns = new ArrayList<Line>();
-    List<Mark> cellsForColumn = new ArrayList<Mark>();
+    List<Line> columns = new ArrayList<>();
 
-    cellsForColumn.add(cells.get(0));
-    cellsForColumn.add(cells.get(3));
-    cellsForColumn.add(cells.get(6));
-    columns.add(new Line(new ArrayList<Mark>(cellsForColumn)));
-
-    cellsForColumn.clear();
-    cellsForColumn.add(cells.get(1));
-    cellsForColumn.add(cells.get(4));
-    cellsForColumn.add(cells.get(7));
-    columns.add(new Line(new ArrayList<Mark>(cellsForColumn)));
-
-    cellsForColumn.clear();
-    cellsForColumn.add(cells.get(2));
-    cellsForColumn.add(cells.get(5));
-    cellsForColumn.add(cells.get(8));
-    columns.add(new Line(new ArrayList<Mark>(cellsForColumn)));
+    for (int i = 0; i < size.getSideLength(); i++) {
+      columns.add(getColumn(i));
+    }
 
     return columns;
   }
 
+  private Line getColumn(int index) {
+    List<Mark> marks = new ArrayList<>();
+    List<Line> rows = getRows();
+
+    for (Line row : rows) {
+      marks.add(row.get(index));
+    }
+
+    return new Line(marks);
+  }
+
   private List<Line> getDiagonals() {
-    List<Line> diagonals = new ArrayList<Line>();
-    List<Mark> cellsForDiagonal = new ArrayList<Mark>();
+    List<Line> diagonals = new ArrayList<>();
+    List<Mark> leftDiagonal = new ArrayList<>();
+    List<Mark> rightDiagonal = new ArrayList<>();
 
-    cellsForDiagonal.add(cells.get(0));
-    cellsForDiagonal.add(cells.get(4));
-    cellsForDiagonal.add(cells.get(8));
-    diagonals.add(new Line(new ArrayList<Mark>(cellsForDiagonal)));
+    List<Line> rows = getRows();
 
-    cellsForDiagonal.clear();
-    cellsForDiagonal.add(cells.get(2));
-    cellsForDiagonal.add(cells.get(4));
-    cellsForDiagonal.add(cells.get(6));
-    diagonals.add(new Line(new ArrayList<Mark>(cellsForDiagonal)));
+    for (int i = 0; i < size.getSideLength(); i++) {
+      leftDiagonal.add(rows.get(i).get(i));
+      rightDiagonal.add(rows.get(i).get((size.getSideLength() - 1) - i));
+    }
+
+    diagonals.add(new Line(leftDiagonal));
+    diagonals.add(new Line(rightDiagonal));
 
     return diagonals;
   }
@@ -179,7 +196,16 @@ public class Board {
           same = true;
         }
       }
+
       return same;
+    }
+
+    public Mark get(int index) {
+      return marks.get(index);
+    }
+
+    public String toString() {
+      return marks.toString();
     }
   }
 }

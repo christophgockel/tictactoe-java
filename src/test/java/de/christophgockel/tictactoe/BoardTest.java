@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static de.christophgockel.tictactoe.Board.Size;
 import static org.junit.Assert.*;
 
 public class BoardTest {
@@ -161,16 +162,64 @@ public class BoardTest {
     assertFalse(board.isPlayable());
   }
 
-  private void prepareFullBoard() {
+  @Test
+  public void canBeOfSize4x4() {
+    Board board = new Board(Size.FourByFour);
+    assertEquals(16, board.getCells().size());
+  }
+
+  @Test (expected = Board.InvalidMove.class)
+  public void size4x4_lowerBoundary() {
+    Board board = new Board(Size.FourByFour);
+    board.setMove(0, Mark.O);
+  }
+
+  @Test (expected = Board.InvalidMove.class)
+  public void size4x4_upperBoundary() {
+    Board board = new Board(Size.FourByFour);
+    board.setMove(17, Mark.O);
+  }
+
+  @Test
+  public void size4x4_needsForMarksInALineForAWinner() {
+    Board board=  new Board(Size.FourByFour);
     board.setMove(1, Mark.X);
     board.setMove(2, Mark.X);
     board.setMove(3, Mark.X);
     board.setMove(4, Mark.X);
-    board.setMove(5, Mark.X);
-    board.setMove(6, Mark.X);
-    board.setMove(7, Mark.X);
-    board.setMove(8, Mark.X);
-    board.setMove(9, Mark.X);
+
+    assertTrue(board.hasWinner());
+    assertEquals(Mark.X, board.getWinner());
+  }
+
+  @Test
+  public void size4x4_needsForMarksInALineForAWinner_column() {
+    Board board=  new Board(Size.FourByFour);
+    board.setMove(1, Mark.O);
+    board.setMove(5, Mark.O);
+    board.setMove(9, Mark.O);
+    board.setMove(13, Mark.O);
+
+    assertTrue(board.hasWinner());
+    assertEquals(Mark.O, board.getWinner());
+  }
+
+  @Test
+  public void size4x4_needsForMarksInALineForAWinner_diagonal() {
+    Board board=  new Board(Size.FourByFour);
+    board.setMove(1, Mark.O);
+    board.setMove(6, Mark.O);
+    board.setMove(11, Mark.O);
+    board.setMove(16, Mark.O);
+
+    assertTrue(board.hasWinner());
+    assertEquals(Mark.O, board.getWinner());
+  }
+
+  private void prepareFullBoard() {
+    for (int i = 1; i <= 9; i++) {
+      board.setMove(i, Mark.X);
+    }
   }
 
   private List<Mark> list(Mark...marks) {
