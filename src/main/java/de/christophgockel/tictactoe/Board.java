@@ -83,8 +83,14 @@ public class Board {
     return new Board(this);
   }
 
-  public List<Mark> getCells() {
-    return Collections.unmodifiableList(cells);
+  public Map<Integer, Mark> getMarks() {
+    Map<Integer, Mark> marks = new HashMap<>();
+
+    for (int i = 0; i < cells.size(); i++) {
+      marks.put(i + 1, cells.get(i));
+    }
+
+    return Collections.unmodifiableMap(marks);
   }
 
   private int emptyCellCount() {

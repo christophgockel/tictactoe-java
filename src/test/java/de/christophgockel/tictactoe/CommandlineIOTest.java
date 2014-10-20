@@ -55,6 +55,18 @@ public class CommandlineIOTest {
   }
 
   @Test
+  public void printsEmpty4x4Board() {
+    Board board = new Board(Board.Size.FourByFour);
+
+    io.show(board);
+
+    assertThat(stdout(), containsString(" 1 |  2 |  3 |  4"));
+    assertThat(stdout(), containsString(" 5 |  6 |  7 |  8"));
+    assertThat(stdout(), containsString(" 9 | 10 | 11 | 12"));
+    assertThat(stdout(), containsString("13 | 14 | 15 | 16"));
+  }
+
+  @Test
   public void printsBoardWithContent() {
     Board board = new Board();
     board.setMove(1, Mark.X);

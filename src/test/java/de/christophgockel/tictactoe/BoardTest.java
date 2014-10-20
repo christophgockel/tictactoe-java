@@ -3,8 +3,7 @@ package de.christophgockel.tictactoe;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 import static de.christophgockel.tictactoe.Board.Size;
 import static org.junit.Assert.*;
@@ -19,22 +18,22 @@ public class BoardTest {
 
   @Test
   public void newBoardIsEmpty() {
-    List<Mark> emptyCells = list(null, null, null, null, null, null, null, null, null);
-    assertEquals(emptyCells, board.getCells());
+    for (Map.Entry entry : board.getMarks().entrySet()) {
+      assertEquals(null, entry.getValue());
+    }
   }
 
   @Test
   public void moveIsPlacedOnBoard() {
-    List<Mark> cells = list(null, null, Mark.X, null, null, null, null, null, null);
-    board.setMove(3, Mark.X);
-    assertEquals(cells, board.getCells());
+    board.setMove(1, Mark.X);
+
+    assertEquals(Mark.X, board.getMarks().get(1));
   }
 
   @Test
-  public void movesAreIndexedStartingFromOne() {
-    List<Mark> cells = list(Mark.O, null, null, null, null, null, null, null, null);
-    board.setMove(1, Mark.O);
-    assertEquals(cells, board.getCells());
+  public void hasNineLocations() {
+    Map<Integer, Mark> marks = board.getMarks();
+    assertEquals(9, marks.size());
   }
 
   @Test
@@ -158,7 +157,7 @@ public class BoardTest {
   @Test
   public void canBeOfSize4x4() {
     Board board = new Board(Size.FourByFour);
-    assertEquals(16, board.getCells().size());
+    assertEquals(16, board.getMarks().size());
   }
 
   @Test (expected = Board.InvalidMove.class)
@@ -213,9 +212,5 @@ public class BoardTest {
     for (int i = 1; i <= 9; i++) {
       board.setMove(i, Mark.X);
     }
-  }
-
-  private List<Mark> list(Mark...marks) {
-    return Arrays.asList(marks);
   }
 }

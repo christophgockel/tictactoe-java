@@ -1,7 +1,9 @@
 package de.christophgockel.tictactoe;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class CommandlineIO implements Output, Input {
   private InputStream input;
@@ -28,20 +30,40 @@ public class CommandlineIO implements Output, Input {
 
   @Override
   public void show(Board board) {
-    List<Mark> cells = board.getCells();
-    String template = " 1 | 2 | 3 " + "\n" +
-                      " 4 | 5 | 6 " + "\n" +
-                      " 7 | 8 | 9 " + "\n";
+    Map<Integer, Mark> marks = board.getMarks();
+    Integer sideLength = (int) Math.sqrt(marks.size());
+    String template = "";
 
-    for (int i = 0; i < cells.size(); i++) {
-      Mark cell = cells.get(i);
+    for (Object o : marks.entrySet()) {
+      Map.Entry entry = (Map.Entry) o;
+      Integer position = (Integer) entry.getKey();
+      Mark mark = (Mark) entry.getValue();
 
-      if (cell != null) {
-        template = template.replace(Integer.toString(i + 1), cell.toString());
+      Object valueToPrint;
+
+      if (mark == null) {
+        valueToPrint = position;
+      } else {
+        valueToPrint = mark;
+      }
+
+      template += String.format(cellFormat(board), valueToPrint);
+
+      if (position % sideLength == 0) {
+        template += "\n";
+      } else {
+        template += " | ";
       }
     }
 
     output.print(template);
+  }
+
+  private String cellFormat(Board board) {
+    Integer boardLength = board.getMarks().size();
+    int numberOfDigits = boardLength.toString().length();
+
+    return "%" + numberOfDigits + "s";
   }
 
   @Override
