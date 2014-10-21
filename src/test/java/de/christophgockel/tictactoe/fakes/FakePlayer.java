@@ -4,25 +4,35 @@ import de.christophgockel.tictactoe.Board;
 import de.christophgockel.tictactoe.Mark;
 import de.christophgockel.tictactoe.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Arrays.*;
+
 public class FakePlayer implements Player {
   public boolean nextMoveHasBeenCalled;
-  public int nextMoveToPlay;
   private Mark mark;
+  private List<Integer> moves = new ArrayList<>();
 
   public FakePlayer(Mark mark) {
     this.mark = mark;
     nextMoveHasBeenCalled = false;
-    nextMoveToPlay = 0;
   }
 
   @Override
   public Board nextMove(Board board) {
     nextMoveHasBeenCalled = true;
-    return board.setMove(nextMoveToPlay, mark);
+    int move = moves.remove(0);
+    return board.setMove(move, mark);
   }
 
   @Override
   public Mark getMark() {
     return mark;
+  }
+
+  public void setNextMovesToPlay(Integer ... moves) {
+    this.moves = new ArrayList<>(asList(moves));
   }
 }

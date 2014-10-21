@@ -35,17 +35,19 @@ public class Game {
     return board.isPlayable();
   }
 
+  public Board getBoard() {
+    return board;
+  }
+
   private void updateOutput() {
     output.show(board);
 
     if (board.hasWinner()) {
       output.showWinner(board.getWinner());
+    } else if (board.isPlayable()) {
+      output.showNextPlayer(otherPlayer.getMark());
     } else {
-      if (board.isPlayable()) {
-        output.showNextPlayer(otherPlayer.getMark());
-      } else {
-        output.showDraw();
-      }
+      output.showDraw();
     }
   }
 

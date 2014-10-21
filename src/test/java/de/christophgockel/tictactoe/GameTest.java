@@ -2,28 +2,26 @@ package de.christophgockel.tictactoe;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import de.christophgockel.tictactoe.fakes.FakeBoard;
 import de.christophgockel.tictactoe.fakes.FakeOutput;
 import de.christophgockel.tictactoe.fakes.FakePlayer;
+
+import static de.christophgockel.tictactoe.Mark.*;
+import static org.junit.Assert.*;
 
 public class GameTest {
   private FakePlayer playerOne;
   private FakePlayer playerTwo;
-  private FakeBoard board;
+  private Board board;
   private FakeOutput output;
   private Game game;
 
   @Before
   public void setup() {
-    playerOne = new FakePlayer(Mark.X);
-    playerTwo = new FakePlayer(Mark.O);
-    board     = new FakeBoard();
+    playerOne = new FakePlayer(X);
+    playerTwo = new FakePlayer(O);
+    board     = new Board();
     output    = new FakeOutput();
-
-    board.setHasWinnerReturnValues(false);
 
     game = new Game(playerOne, playerTwo, board, output);
   }
@@ -34,96 +32,85 @@ public class GameTest {
   }
 
   @Test
-  public void asksTheBoardForCompletionOnNextRound() {
-    game.nextRound();
-    assertTrue(board.isPlayableHasBeenCalled);
+  public void newGameIsPlayable() {
+    Game game = new Game(playerOne, playerTwo, new Board(), output);
+    assertTrue(game.isPlayable());
   }
 
   @Test
-  public void asksThePlayerForItsNextMoveWhenPlayable() {
-    board.setIsPlayableValues(true);
+  public void finishedGameIsNotPlayable() {
+    prepareFinishedBoard();
+    assertFalse(game.isPlayable());
+  }
+
+
+  @Test
+  public void boardChangesWhenPlayerMakesMove() {
+    playerOne.setNextMovesToPlay(1);
+
     game.nextRound();
 
-    assertTrue(playerOne.nextMoveHasBeenCalled);
+    assertNotEquals(board, game.getBoard());
   }
 
   @Test
   public void displaysTheBoardAfterRoundHasBeenPlayed() {
     output.showBoardHasBeenCalled = false;
+    playerOne.setNextMovesToPlay(1);
     game.nextRound();
 
     assertTrue(output.showBoardHasBeenCalled);
   }
 
   @Test
-  public void switchesPlayersAfterRounds() {
-    board.setHasWinnerReturnValues(false, false);
-    game.nextRound();
-    game.nextRound();
+  public void printsWinningMessageWhenThereIsWinner() {
+    playerOne.setNextMovesToPlay(1, 2, 3);
+    playerTwo.setNextMovesToPlay(4, 5);
 
-    assertTrue(playerTwo.nextMoveHasBeenCalled);
-  }
-
-  @Test
-  public void printsWinningMessageWhenThereIsAWinner() {
-    board.setHasWinnerReturnValues(true);
-
-    game.nextRound();
-
-    assertTrue(output.showWinnerHasBeenCalled);
-  }
-
-  @Test
-  public void printsWinningMessageWhenPlayerOneIsWinner() {
-    board.setHasWinnerReturnValues(true);
-
-    game.nextRound();
+    playRounds(5);
 
     assertEquals(playerOne.getMark(), output.announcedWinner);
   }
 
   @Test
-  public void printsWinningMessageWhenPlayerTwoIsWinner() {
-    board.setHasWinnerReturnValues(false, true);
-
-    game.nextRound();
-    game.nextRound();
-
-    assertEquals(playerTwo.getMark(), output.announcedWinner);
-  }
-
-  @Test
   public void printsDrawMessageWhenThereIsNoWinner() {
-    board.setHasWinnerReturnValues(false, false);
-    board.setIsPlayableValues(true, false);
+    playerOne.setNextMovesToPlay(1, 2, 6, 7, 9);
+    playerTwo.setNextMovesToPlay(3, 4, 5, 8);
 
-    game.nextRound();
+    playRounds(9);
 
     assertTrue(output.announcedDraw);
   }
 
   @Test (expected = Game.Over.class)
   public void throwsWhenTryingToPlayFinishedGame() {
-    board.setIsPlayableValues(false);
+    prepareFinishedBoard();
     game.nextRound();
   }
 
   @Test
-  public void asksTheBoardIfItIsPlayable() {
-    game.isPlayable();
-    assertTrue(board.isPlayableHasBeenCalled);
-  }
-
-  @Test
   public void announcesNextPlayerAsLongAsGameIsRunning() {
+    playerOne.setNextMovesToPlay(1);
     game.nextRound();
     assertTrue(output.showNextPlayerHasBeenCalled);
   }
 
   @Test
   public void placingAnInvalidMoveShowErrorMessage() {
-    playerOne.nextMoveToPlay = -1;
+    playerOne.setNextMovesToPlay(-1);
     game.nextRound();
     assertTrue(output.showInvalidMoveMessageHasBeenCalled);
+  }
+
+  private void prepareFinishedBoard() {
+    board.setMove(1, playerOne.getMark());
+    board.setMove(2, playerOne.getMark());
+    board.setMove(3, playerOne.getMark());
+  }
+
+  private void playRounds(int turns) {
+    for (int i = 0; i < turns; i++) {
+      game.nextRound();
+    }
   }
 }
