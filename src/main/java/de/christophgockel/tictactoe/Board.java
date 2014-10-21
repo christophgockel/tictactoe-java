@@ -3,27 +3,6 @@ package de.christophgockel.tictactoe;
 import java.util.*;
 
 public class Board {
-  public class InvalidMove extends RuntimeException {
-  }
-
-  public enum Size {
-    ThreeByThree(3), FourByFour(4);
-
-    private final int sideLength;
-
-    private Size(int sideLength) {
-      this.sideLength = sideLength;
-    }
-
-    public int getNumberOfCells() {
-      return sideLength * sideLength;
-    }
-
-    public int getSideLength() {
-      return sideLength;
-    }
-  }
-
   private final Size size;
   private final List<Mark> cells;
 
@@ -46,41 +25,33 @@ public class Board {
   }
 
   public boolean hasWinner() {
-    for (Line line : getLineCombinations()) {
-      if (line.containsOnlySame()) {
-        return true;
-      }
-    }
-    return false;
+    return getWinner() != null;
   }
 
   public Mark getWinner() {
-    if (hasWinner()) {
-      for (Line line : getLineCombinations()) {
-        for (Mark mark : Mark.values()) {
-          if (line.containsOnly(mark)) {
-            return mark;
-          }
-        }
+    for (Line line : getLineCombinations()) {
+      if (line.containsOnlySame()) {
+        return line.get(0);
       }
     }
+
     return null;
   }
 
   public Board setMove(int move, Mark mark) {
     int convertedMove = move - 1;
 
-    if (convertedMove < 0 || convertedMove >= size.getNumberOfCells()) {
+    if (isInvalidMove(convertedMove)) {
       throw new InvalidMove();
     }
 
-    if (cells.get(convertedMove) == null) {
-      cells.set(convertedMove, mark);
-    } else {
-      throw new InvalidMove();
-    }
+    cells.set(convertedMove, mark);
 
     return new Board(this);
+  }
+
+  private boolean isInvalidMove(int convertedMove) {
+    return convertedMove < 0 || convertedMove >= size.getNumberOfCells() || cells.get(convertedMove) != null;
   }
 
   public Map<Integer, Mark> getMarks() {
@@ -129,7 +100,7 @@ public class Board {
     List<Mark> marks = new ArrayList<>();
 
     int start = index * size.getSideLength();
-    int end   = start + size.getSideLength();
+    int end = start + size.getSideLength();
 
     for (int i = start; i < end; i++) {
       marks.add(cells.get(i));
@@ -175,6 +146,27 @@ public class Board {
     diagonals.add(new Line(rightDiagonal));
 
     return diagonals;
+  }
+
+  public enum Size {
+    ThreeByThree(3), FourByFour(4);
+
+    private final int sideLength;
+
+    private Size(int sideLength) {
+      this.sideLength = sideLength;
+    }
+
+    public int getNumberOfCells() {
+      return sideLength * sideLength;
+    }
+
+    public int getSideLength() {
+      return sideLength;
+    }
+  }
+
+  public class InvalidMove extends RuntimeException {
   }
 
   private class Line {
