@@ -21,9 +21,9 @@ public class Board {
     cells = Arrays.asList(new Mark[size.getNumberOfCells()]);
   }
 
-  private Board(Board board) {
-    this.cells = new ArrayList<>(board.cells);
-    this.size = board.size;
+  private Board(Size size, List<Mark> cells) {
+    this.size = size;
+    this.cells = cells;
   }
 
   public boolean isPlayable() {
@@ -46,14 +46,15 @@ public class Board {
 
   public Board setMove(int move, Mark mark) {
     int convertedMove = move - 1;
+    List<Mark> newCells = new ArrayList<>(cells);
 
     if (isInvalidMove(convertedMove)) {
       throw new InvalidMove(move);
     }
 
-    cells.set(convertedMove, mark);
+    newCells.set(convertedMove, mark);
 
-    return new Board(this);
+    return new Board(size, newCells);
   }
 
   private boolean isInvalidMove(int convertedMove) {

@@ -26,8 +26,7 @@ public class BoardTest {
 
   @Test
   public void moveIsPlacedOnBoard() {
-    board.setMove(1, Mark.X);
-
+    board = prepareBoardWithMoves(Mark.X, 1);
     assertEquals(Mark.X, board.getMarks().get(1));
   }
 
@@ -51,81 +50,55 @@ public class BoardTest {
 
   @Test
   public void knowsWhenThereIsAWinner() {
-    board.setMove(1, Mark.X);
-    board.setMove(2, Mark.X);
-    board.setMove(3, Mark.X);
-
+    board = prepareBoardWithMoves(Mark.X, 1, 2, 3);
     assertTrue(board.hasWinner());
   }
 
   @Test
   public void knowsWinningConditionForFirstRow() {
-    board.setMove(1, Mark.X);
-    board.setMove(2, Mark.X);
-    board.setMove(3, Mark.X);
-
+    board = prepareBoardWithMoves(Mark.X, 1, 2, 3);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForSecondRow() {
-    board.setMove(4, Mark.X);
-    board.setMove(5, Mark.X);
-    board.setMove(6, Mark.X);
-
+    board = prepareBoardWithMoves(Mark.X, 4, 5, 6);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForThirdRow() {
-    board.setMove(7, Mark.X);
-    board.setMove(8, Mark.X);
-    board.setMove(9, Mark.X);
-
+    board = prepareBoardWithMoves(Mark.X, 7, 8, 9);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForFirstColumn() {
-    board.setMove(1, Mark.O);
-    board.setMove(4, Mark.O);
-    board.setMove(7, Mark.O);
-
+    board = prepareBoardWithMoves(Mark.O, 1, 4, 7);
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForSecondColumn() {
-    board.setMove(2, Mark.O);
-    board.setMove(5, Mark.O);
-    board.setMove(8, Mark.O);
-
+    board = prepareBoardWithMoves(Mark.O, 2, 5, 8);
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForThirdColumn() {
-    board.setMove(3, Mark.O);
-    board.setMove(6, Mark.O);
-    board.setMove(9, Mark.O);
-
+    board = prepareBoardWithMoves(Mark.O, 3, 6, 9);
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForFirstDiagonal() {
-    board.setMove(1, Mark.X);
-    board.setMove(5, Mark.X);
-    board.setMove(9, Mark.X);
-
+    board = prepareBoardWithMoves(Mark.X, 1, 5, 9);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForSecondDiagonal() {
-    board.setMove(3, Mark.O);
-    board.setMove(5, Mark.O);
-    board.setMove(7, Mark.O);
+    board = prepareBoardWithMoves(Mark.O, 3, 5, 7);
 
     assertEquals(Mark.O, board.getWinner());
   }
@@ -153,16 +126,12 @@ public class BoardTest {
 
   @Test (expected = Board.InvalidMove.class)
   public void throwsExceptionWhenPlacingInvalidMove_alreadyOccupiedSpot() {
-    board.setMove(2, Mark.O);
-    board.setMove(2, Mark.X);
+    board.setMove(2, Mark.O).setMove(2, Mark.X);
   }
 
   @Test
   public void isNotPlayableWhenWinnerIsAvailable() {
-    board.setMove(1, Mark.O);
-    board.setMove(4, Mark.O);
-    board.setMove(7, Mark.O);
-
+    board = prepareBoardWithMoves(Mark.O, 1, 4, 7);
     assertFalse(board.isPlayable());
   }
 
@@ -186,36 +155,21 @@ public class BoardTest {
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner() {
-    Board board = new Board(Size.FourByFour);
-    board.setMove(1, Mark.X);
-    board.setMove(2, Mark.X);
-    board.setMove(3, Mark.X);
-    board.setMove(4, Mark.X);
-
+    board = prepare4x4BoardWithMoves(Mark.X, 1, 2, 3, 4);
     assertTrue(board.hasWinner());
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner_column() {
-    Board board = new Board(Size.FourByFour);
-    board.setMove(1, Mark.O);
-    board.setMove(5, Mark.O);
-    board.setMove(9, Mark.O);
-    board.setMove(13, Mark.O);
-
+    board = prepare4x4BoardWithMoves(Mark.O, 1, 5, 9, 13);
     assertTrue(board.hasWinner());
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner_diagonal() {
-    Board board = new Board(Size.FourByFour);
-    board.setMove(1, Mark.O);
-    board.setMove(6, Mark.O);
-    board.setMove(11, Mark.O);
-    board.setMove(16, Mark.O);
-
+    board = prepare4x4BoardWithMoves(Mark.O, 1, 6, 11, 16);
     assertTrue(board.hasWinner());
     assertEquals(Mark.O, board.getWinner());
   }
@@ -229,24 +183,48 @@ public class BoardTest {
 
   @Test
   public void freeLocationsContainIndices() {
-    Board board=  new Board();
-    board.setMove(1, Mark.O);
+    board = prepareBoardWithMoves(Mark.O, 1);
 
     assertEquals(2, (int) board.getFreeLocations().get(0));
   }
 
   @Test
   public void knowsFreeLocations() {
-    Board board=  new Board();
-    board.setMove(1, Mark.O);
-    board.setMove(9, Mark.X);
+    board = prepareBoardWithMoves(Mark.X, 1, 9);
 
     assertEquals(7, board.getFreeLocations().size());
   }
 
+  @Test
+  public void settingAMoveDoesNotKeepState() {
+    Board board1 = new Board();
+    Board board2 = board1.setMove(1, Mark.X);
+
+    assertEquals(9, board1.getFreeLocations().size());
+    assertEquals(8, board2.getFreeLocations().size());
+  }
+
   private void prepareFullBoard() {
     for (int i = 1; i <= 9; i++) {
-      board.setMove(i, Mark.X);
+      board = board.setMove(i, Mark.X);
     }
+  }
+
+  private Board prepare4x4BoardWithMoves(Mark mark, int ... moves) {
+    return createBoardWithMoves(Size.FourByFour, mark, moves);
+  }
+
+  private Board prepareBoardWithMoves(Mark mark, int ... moves) {
+    return createBoardWithMoves(Size.ThreeByThree, mark, moves);
+  }
+
+  private Board createBoardWithMoves(Size size, Mark mark, int ... moves) {
+    Board board = new Board(size);
+
+    for (int move : moves) {
+      board = board.setMove(move, mark);
+    }
+
+    return board;
   }
 }
