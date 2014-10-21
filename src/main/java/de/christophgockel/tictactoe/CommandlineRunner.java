@@ -1,7 +1,7 @@
 package de.christophgockel.tictactoe;
 
 public class CommandlineRunner {
-  private Game game;
+  private final Game game;
 
   public CommandlineRunner(Game game) {
     this.game = game;

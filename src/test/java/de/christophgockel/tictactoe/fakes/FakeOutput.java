@@ -5,29 +5,24 @@ import de.christophgockel.tictactoe.Mark;
 import de.christophgockel.tictactoe.Output;
 
 public class FakeOutput implements Output {
-  public boolean showBoardHasBeenCalled;
-  public boolean showWinnerHasBeenCalled;
   public Mark announcedWinner;
+  public Mark announcedPlayer;
   public boolean announcedDraw;
-  public boolean showNextPlayerHasBeenCalled;
-  public boolean showInvalidMoveMessageHasBeenCalled;
+  public String invalidMoveMessage;
+  public Board showedBoard;
 
   public FakeOutput() {
-    showBoardHasBeenCalled = false;
-    showWinnerHasBeenCalled = false;
     announcedDraw = false;
-    showNextPlayerHasBeenCalled = false;
-    showInvalidMoveMessageHasBeenCalled = false;
+    invalidMoveMessage = "";
   }
 
   @Override
   public void show(Board board) {
-    showBoardHasBeenCalled = true;
+    showedBoard = board;
   }
 
   @Override
   public void showWinner(Mark mark) {
-    showWinnerHasBeenCalled = true;
     announcedWinner = mark;
   }
 
@@ -38,11 +33,11 @@ public class FakeOutput implements Output {
 
   @Override
   public void showNextPlayer(Mark mark) {
-    showNextPlayerHasBeenCalled = true;
+    announcedPlayer = mark;
   }
 
   @Override
   public void showInvalidMoveMessage() {
-    showInvalidMoveMessageHasBeenCalled = true;
+    invalidMoveMessage = "invalid move";
   }
 }

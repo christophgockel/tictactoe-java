@@ -4,9 +4,8 @@ import java.io.*;
 import java.util.Map;
 
 public class CommandlineIO implements Output, Input {
-  private PrintStream output;
-
-  private BufferedReader reader;
+  private final PrintStream output;
+  private final BufferedReader reader;
 
   public CommandlineIO(InputStream input, PrintStream output) {
     this.output = output;

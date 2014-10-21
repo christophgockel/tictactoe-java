@@ -1,50 +1,51 @@
 package de.christophgockel.tictactoe;
 
-import de.christophgockel.tictactoe.fakes.FakeGame;
 import de.christophgockel.tictactoe.fakes.FakeOutput;
+import de.christophgockel.tictactoe.fakes.FakePlayer;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CommandlineRunnerTest {
-  private FakeGame game;
+  private Board board;
+  private FakeOutput output;
   private CommandlineRunner runner;
+  private FakePlayer playerOne;
+  private FakePlayer playerTwo;
 
   @Before
   public void setup() {
-    game = new FakeGame(new FakeOutput());
+    playerOne = new FakePlayer(Mark.X);
+    playerTwo = new FakePlayer(Mark.O);
+    board = new Board();
+    output = new FakeOutput();
+    Game game = new Game(playerOne, playerTwo, board, output);
     runner = new CommandlineRunner(game);
   }
 
   @Test
-  public void asksTheGameIfItIsReadyToBePlayed() {
+  public void doesNotPlayAnythingIfTheGameIsFinished() {
+    prepareFinishedBoard();
+
     runner.play();
 
-    assertTrue(game.isPlayableHasBeenCalled);
+    assertEquals(null, output.announcedPlayer);
   }
 
   @Test
-  public void playsTheNextRoundWhenGameIsReady() {
-    game.setIsPlayableReturnValues(true);
+  public void playsUntilTheGameIsOver() {
+    playerOne.setNextMovesToPlay(1, 2, 3);
+    playerTwo.setNextMovesToPlay(4, 5);
+
     runner.play();
 
-    assertTrue(game.nextRoundHasBeenCalled);
+    assertEquals(playerOne.getMark(), output.announcedWinner);
   }
 
-  @Test
-  public void doesNotPlayTheNextRoundWhenGameIsNotReady() {
-    game.setIsPlayableReturnValues(false);
-    runner.play();
-
-    assertFalse(game.nextRoundHasBeenCalled);
-  }
-
-  @Test
-  public void playsRoundsConsecutively() {
-    game.setIsPlayableReturnValues(true, true, false);
-    runner.play();
-
-    assertEquals(2, game.nextRoundCallTimes);
+  private void prepareFinishedBoard() {
+    board.setMove(1, Mark.X);
+    board.setMove(2, Mark.X);
+    board.setMove(3, Mark.X);
   }
 }

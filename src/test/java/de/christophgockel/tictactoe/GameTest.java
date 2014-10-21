@@ -50,11 +50,10 @@ public class GameTest {
 
   @Test
   public void displaysTheBoardAfterRoundHasBeenPlayed() {
-    output.showBoardHasBeenCalled = false;
     playerOne.setNextMovesToPlay(1);
     game.nextRound();
 
-    assertTrue(output.showBoardHasBeenCalled);
+    assertNotNull(output.showedBoard);
   }
 
   @Test
@@ -86,15 +85,19 @@ public class GameTest {
   @Test
   public void announcesNextPlayerAsLongAsGameIsRunning() {
     playerOne.setNextMovesToPlay(1);
+
     game.nextRound();
-    assertTrue(output.showNextPlayerHasBeenCalled);
+
+    assertEquals(playerOne.getMark(), output.announcedPlayer);
   }
 
   @Test
   public void placingAnInvalidMoveShowErrorMessage() {
     playerOne.setNextMovesToPlay(-1);
+
     game.nextRound();
-    assertTrue(output.showInvalidMoveMessageHasBeenCalled);
+
+    assertNotEquals("", output.invalidMoveMessage);
   }
 
   private void prepareFinishedBoard() {

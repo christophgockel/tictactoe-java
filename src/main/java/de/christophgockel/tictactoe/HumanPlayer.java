@@ -1,8 +1,8 @@
 package de.christophgockel.tictactoe;
 
 public class HumanPlayer implements Player {
-  private Mark mark;
-  private Input input;
+  private final Mark mark;
+  private final Input input;
 
   public HumanPlayer(Mark mark, Input input) {
     this.mark = mark;

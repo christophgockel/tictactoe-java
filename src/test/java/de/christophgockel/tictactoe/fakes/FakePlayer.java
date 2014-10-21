@@ -10,20 +10,16 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class FakePlayer implements Player {
-  public boolean nextMoveHasBeenCalled;
-  private Mark mark;
+  private final Mark mark;
   private List<Integer> moves = new ArrayList<>();
 
   public FakePlayer(Mark mark) {
     this.mark = mark;
-    nextMoveHasBeenCalled = false;
   }
 
   @Override
   public Board nextMove(Board board) {
-    nextMoveHasBeenCalled = true;
-    int move = moves.remove(0);
-    return board.setMove(move, mark);
+    return board.setMove(moves.remove(0), mark);
   }
 
   @Override

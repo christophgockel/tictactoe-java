@@ -4,7 +4,7 @@ public class Game {
   private Player currentPlayer;
   private Player otherPlayer;
   private Board board;
-  private Output output;
+  private final Output output;
 
   public Game(Player playerOne, Player playerTwo, Board board, Output output) {
     this.currentPlayer = playerOne;
