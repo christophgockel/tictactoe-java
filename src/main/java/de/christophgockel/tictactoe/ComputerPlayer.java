@@ -9,7 +9,7 @@ public class ComputerPlayer implements Player {
 
   @Override
   public Board nextMove(Board board) {
-    return null;
+    return board.setMove(1, mark);
   }
 
   @Override
