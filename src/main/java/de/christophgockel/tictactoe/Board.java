@@ -201,9 +201,5 @@ public class Board {
     public Mark get(int index) {
       return marks.get(index);
     }
-
-    public String toString() {
-      return marks.toString();
-    }
   }
 }
