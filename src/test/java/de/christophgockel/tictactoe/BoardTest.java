@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static de.christophgockel.tictactoe.Board.Size;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
 
 public class BoardTest {
@@ -134,6 +135,17 @@ public class BoardTest {
     board.setMove(0, Mark.O);
   }
 
+  @Test
+  public void exceptionThrownOnInvalidMoveContainsTheMove() {
+    try {
+      board.setMove(0, Mark.O);
+      fail("expected exception was not thrown");
+    } catch (Board.InvalidMove invalidMove) {
+      assertThat(invalidMove.getMessage(), containsString("Invalid"));
+      assertThat(invalidMove.getMessage(), containsString("0"));
+    }
+  }
+
   @Test (expected = Board.InvalidMove.class)
   public void throwsExceptionWhenPlacingInvalidMove_upperBound() {
     board.setMove(10, Mark.O);
@@ -174,7 +186,7 @@ public class BoardTest {
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner() {
-    Board board=  new Board(Size.FourByFour);
+    Board board = new Board(Size.FourByFour);
     board.setMove(1, Mark.X);
     board.setMove(2, Mark.X);
     board.setMove(3, Mark.X);
@@ -186,7 +198,7 @@ public class BoardTest {
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner_column() {
-    Board board=  new Board(Size.FourByFour);
+    Board board = new Board(Size.FourByFour);
     board.setMove(1, Mark.O);
     board.setMove(5, Mark.O);
     board.setMove(9, Mark.O);
@@ -198,7 +210,7 @@ public class BoardTest {
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner_diagonal() {
-    Board board=  new Board(Size.FourByFour);
+    Board board = new Board(Size.FourByFour);
     board.setMove(1, Mark.O);
     board.setMove(6, Mark.O);
     board.setMove(11, Mark.O);
@@ -206,6 +218,30 @@ public class BoardTest {
 
     assertTrue(board.hasWinner());
     assertEquals(Mark.O, board.getWinner());
+  }
+
+  @Test
+  public void newBoardHasAllFreeLocations() {
+    Board board = new Board(Size.ThreeByThree);
+
+    assertEquals(9, board.getFreeLocations().size());
+  }
+
+  @Test
+  public void freeLocationsContainIndices() {
+    Board board=  new Board();
+    board.setMove(1, Mark.O);
+
+    assertEquals(2, (int) board.getFreeLocations().get(0));
+  }
+
+  @Test
+  public void knowsFreeLocations() {
+    Board board=  new Board();
+    board.setMove(1, Mark.O);
+    board.setMove(9, Mark.X);
+
+    assertEquals(7, board.getFreeLocations().size());
   }
 
   private void prepareFullBoard() {

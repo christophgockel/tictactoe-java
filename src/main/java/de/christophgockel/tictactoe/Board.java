@@ -3,6 +3,12 @@ package de.christophgockel.tictactoe;
 import java.util.*;
 
 public class Board {
+  public class InvalidMove extends RuntimeException {
+    public InvalidMove(int move) {
+      super("Invalid location for move: " + move);
+    }
+  }
+
   private final Size size;
   private final List<Mark> cells;
 
@@ -42,7 +48,7 @@ public class Board {
     int convertedMove = move - 1;
 
     if (isInvalidMove(convertedMove)) {
-      throw new InvalidMove();
+      throw new InvalidMove(move);
     }
 
     cells.set(convertedMove, mark);
@@ -148,6 +154,18 @@ public class Board {
     return diagonals;
   }
 
+  public List<Integer> getFreeLocations() {
+    List<Integer> locations = new ArrayList<>();
+
+    for (Map.Entry<Integer, Mark> entry : getMarks().entrySet()) {
+      if (entry.getValue() == null) {
+        locations.add(entry.getKey());
+      }
+    }
+
+    return locations;
+  }
+
   public enum Size {
     ThreeByThree(3), FourByFour(4);
 
@@ -164,9 +182,6 @@ public class Board {
     public int getSideLength() {
       return sideLength;
     }
-  }
-
-  public class InvalidMove extends RuntimeException {
   }
 
   private class Line {
