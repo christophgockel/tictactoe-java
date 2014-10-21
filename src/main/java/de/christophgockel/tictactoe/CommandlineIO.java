@@ -1,8 +1,6 @@
 package de.christophgockel.tictactoe;
 
 import java.io.*;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class CommandlineIO implements Output, Input {
@@ -10,10 +8,6 @@ public class CommandlineIO implements Output, Input {
   private PrintStream output;
 
   private BufferedReader reader;
-
-  public CommandlineIO() {
-    this(System.in, System.out);
-  }
 
   public CommandlineIO(InputStream input, PrintStream output) {
     this.input = input;
@@ -35,32 +29,39 @@ public class CommandlineIO implements Output, Input {
   @Override
   public void show(Board board) {
     Map<Integer, Mark> marks = board.getMarks();
-    Integer sideLength = (int) Math.sqrt(marks.size());
-    String template = "";
+    int sideLength = (int) Math.sqrt(marks.size());
+    String content = "";
+    String format = cellFormat(board);
 
-    for (Object o : marks.entrySet()) {
-      Map.Entry entry = (Map.Entry) o;
-      Integer position = (Integer) entry.getKey();
-      Mark mark = (Mark) entry.getValue();
+    for (Map.Entry<Integer, Mark> entry : marks.entrySet()) {
+      int position = entry.getKey();
+      Mark mark = entry.getValue();
 
-      Object valueToPrint;
-
-      if (mark == null) {
-        valueToPrint = position;
-      } else {
-        valueToPrint = mark;
-      }
-
-      template += String.format(cellFormat(board), valueToPrint);
-
-      if (position % sideLength == 0) {
-        template += "\n";
-      } else {
-        template += " | ";
-      }
+      content += addMarker(format, position, mark);
+      content += addSeparator(sideLength, position);
     }
 
-    output.print(template);
+    output.print(content);
+  }
+
+  private String addSeparator(int sideLength, int position) {
+    if (isEndOfRow(sideLength, position)) {
+      return "\n";
+    } else {
+      return " | ";
+    }
+  }
+
+  private String addMarker(String format, int position, Mark mark) {
+    if (mark == null) {
+      return String.format(format, position);
+    } else {
+      return String.format(format, mark);
+    }
+  }
+
+  private boolean isEndOfRow(int sideLength, int position) {
+    return position % sideLength == 0;
   }
 
   private String cellFormat(Board board) {
