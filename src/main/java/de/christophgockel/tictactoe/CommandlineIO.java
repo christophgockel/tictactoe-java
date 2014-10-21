@@ -11,6 +11,10 @@ public class CommandlineIO implements Output, Input {
 
   private BufferedReader reader;
 
+  public CommandlineIO() {
+    this(System.in, System.out);
+  }
+
   public CommandlineIO(InputStream input, PrintStream output) {
     this.input = input;
     this.output = output;

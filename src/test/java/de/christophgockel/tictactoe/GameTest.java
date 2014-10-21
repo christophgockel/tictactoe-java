@@ -27,11 +27,6 @@ public class GameTest {
   }
 
   @Test
-  public void creatingNewGameOutputsBoard() {
-    assertTrue(output.showBoardHasBeenCalled);
-  }
-
-  @Test
   public void newGameIsPlayable() {
     Game game = new Game(playerOne, playerTwo, new Board(), output);
     assertTrue(game.isPlayable());

@@ -11,23 +11,43 @@ public class Game {
     this.otherPlayer = playerTwo;
     this.board = board;
     this.output = output;
-
-    this.output.show(board);
   }
 
   public void nextRound() {
     try {
-      if (board.isPlayable()) {
+      showBoard();
+
+      if (isPlayable()) {
         board = currentPlayer.nextMove(board);
 
-        updateOutput();
-
         switchPlayers();
+
+        if (isFinished()) {
+          showEndResult();
+        }
       } else {
         throw new Over();
       }
     } catch (Board.InvalidMove invalidMove) {
       output.showInvalidMoveMessage();
+    }
+  }
+
+  private boolean isFinished() {
+    return !board.isPlayable();
+  }
+
+  private void showBoard() {
+    output.show(board);
+    output.showNextPlayer(currentPlayer.getMark());
+  }
+
+  private void showEndResult() {
+    if (board.hasWinner()) {
+      output.show(board);
+      output.showWinner(board.getWinner());
+    } else {
+      output.showDraw();
     }
   }
 
@@ -37,18 +57,6 @@ public class Game {
 
   public Board getBoard() {
     return board;
-  }
-
-  private void updateOutput() {
-    output.show(board);
-
-    if (board.hasWinner()) {
-      output.showWinner(board.getWinner());
-    } else if (board.isPlayable()) {
-      output.showNextPlayer(otherPlayer.getMark());
-    } else {
-      output.showDraw();
-    }
   }
 
   private void switchPlayers() {
