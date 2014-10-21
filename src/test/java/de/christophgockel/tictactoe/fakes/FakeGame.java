@@ -10,7 +10,7 @@ public class FakeGame extends Game {
   private static FakePlayer playerTwo;
   private static FakeBoard board;
 
-  public List<Boolean> isPlayableValues;
+  private List<Boolean> isPlayableValues;
   public boolean isPlayableHasBeenCalled;
   public boolean nextRoundHasBeenCalled;
   public int nextRoundCallTimes;
@@ -23,7 +23,7 @@ public class FakeGame extends Game {
 
   public FakeGame(Player playerOne, Player playerTwo, Board board, Output output) {
     super(playerOne, playerTwo, board, output);
-    isPlayableValues = new ArrayList<Boolean>();
+    isPlayableValues = new ArrayList<>();
     isPlayableHasBeenCalled = false;
     nextRoundHasBeenCalled = false;
     nextRoundCallTimes = 0;

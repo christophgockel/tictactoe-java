@@ -5,10 +5,9 @@ import de.christophgockel.tictactoe.Mark;
 import de.christophgockel.tictactoe.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 public class FakePlayer implements Player {
   public boolean nextMoveHasBeenCalled;

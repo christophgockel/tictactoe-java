@@ -1,12 +1,12 @@
 package de.christophgockel.tictactoe;
 
+import de.christophgockel.tictactoe.fakes.FakeOutput;
+import de.christophgockel.tictactoe.fakes.FakePlayer;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.christophgockel.tictactoe.fakes.FakeOutput;
-import de.christophgockel.tictactoe.fakes.FakePlayer;
-
-import static de.christophgockel.tictactoe.Mark.*;
+import static de.christophgockel.tictactoe.Mark.O;
+import static de.christophgockel.tictactoe.Mark.X;
 import static org.junit.Assert.*;
 
 public class GameTest {

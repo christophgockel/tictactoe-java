@@ -4,13 +4,11 @@ import java.io.*;
 import java.util.Map;
 
 public class CommandlineIO implements Output, Input {
-  private InputStream input;
   private PrintStream output;
 
   private BufferedReader reader;
 
   public CommandlineIO(InputStream input, PrintStream output) {
-    this.input = input;
     this.output = output;
 
     this.reader = new BufferedReader(new InputStreamReader(input));

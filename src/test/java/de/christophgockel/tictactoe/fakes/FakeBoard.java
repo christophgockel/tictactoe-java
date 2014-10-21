@@ -16,8 +16,8 @@ public class FakeBoard extends Board {
 
   public FakeBoard() {
     isPlayableHasBeenCalled = false;
-    isPlayableValues = new ArrayList<Boolean>();
-    hasWinnerValues = new ArrayList<Boolean>();
+    isPlayableValues = new ArrayList<>();
+    hasWinnerValues = new ArrayList<>();
     setMoveHasBeenCalled = false;
   }
 

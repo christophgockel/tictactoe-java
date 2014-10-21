@@ -5,19 +5,15 @@ import de.christophgockel.tictactoe.fakes.FakeOutput;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CommandlineRunnerTest {
-  private FakeOutput output;
   private FakeGame game;
   private CommandlineRunner runner;
 
   @Before
   public void setup() {
-    output = new FakeOutput();
-    game = new FakeGame(output);
+    game = new FakeGame(new FakeOutput());
     runner = new CommandlineRunner(game);
   }
 
