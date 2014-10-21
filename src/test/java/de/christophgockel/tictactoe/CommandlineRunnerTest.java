@@ -26,7 +26,8 @@ public class CommandlineRunnerTest {
 
   @Test
   public void doesNotPlayAnythingIfTheGameIsFinished() {
-    prepareFinishedBoard();
+    board = BoardHelper.createBoardWithMoves(Mark.X, 1, 2, 3);
+    runner = new CommandlineRunner(new Game(playerOne, playerTwo, board, output));
 
     runner.play();
 
@@ -41,11 +42,5 @@ public class CommandlineRunnerTest {
     runner.play();
 
     assertEquals(playerOne.getMark(), output.announcedWinner);
-  }
-
-  private void prepareFinishedBoard() {
-    board.setMove(1, Mark.X);
-    board.setMove(2, Mark.X);
-    board.setMove(3, Mark.X);
   }
 }

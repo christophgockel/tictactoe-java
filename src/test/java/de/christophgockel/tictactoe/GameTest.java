@@ -101,9 +101,10 @@ public class GameTest {
   }
 
   private void prepareFinishedBoard() {
-    board.setMove(1, playerOne.getMark());
-    board.setMove(2, playerOne.getMark());
-    board.setMove(3, playerOne.getMark());
+    playerOne.setNextMovesToPlay(1, 2, 3);
+    playerTwo.setNextMovesToPlay(4, 5);
+
+    playRounds(5);
   }
 
   private void playRounds(int turns) {

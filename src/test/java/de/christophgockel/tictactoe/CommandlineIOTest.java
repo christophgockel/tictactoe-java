@@ -68,15 +68,12 @@ public class CommandlineIOTest {
 
   @Test
   public void printsBoardWithContent() {
-    Board board = new Board();
-    board.setMove(1, Mark.X);
-    board.setMove(5, Mark.O);
-    board.setMove(9, Mark.X);
+    Board board = BoardHelper.createBoardWithMoves(Mark.X, 1, 5, 9);
 
     io.show(board);
 
     assertThat(stdout(), containsString("X | 2 | 3"));
-    assertThat(stdout(), containsString("4 | O | 6"));
+    assertThat(stdout(), containsString("4 | X | 6"));
     assertThat(stdout(), containsString("7 | 8 | X"));
   }
 

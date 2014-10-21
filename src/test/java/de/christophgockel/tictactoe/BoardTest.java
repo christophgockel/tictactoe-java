@@ -26,7 +26,7 @@ public class BoardTest {
 
   @Test
   public void moveIsPlacedOnBoard() {
-    board = prepareBoardWithMoves(Mark.X, 1);
+    board = BoardHelper.createBoardWithMoves(Mark.X, 1);
     assertEquals(Mark.X, board.getMarks().get(1));
   }
 
@@ -50,55 +50,55 @@ public class BoardTest {
 
   @Test
   public void knowsWhenThereIsAWinner() {
-    board = prepareBoardWithMoves(Mark.X, 1, 2, 3);
+    board = BoardHelper.createBoardWithMoves(Mark.X, 1, 2, 3);
     assertTrue(board.hasWinner());
   }
 
   @Test
   public void knowsWinningConditionForFirstRow() {
-    board = prepareBoardWithMoves(Mark.X, 1, 2, 3);
+    board = BoardHelper.createBoardWithMoves(Mark.X, 1, 2, 3);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForSecondRow() {
-    board = prepareBoardWithMoves(Mark.X, 4, 5, 6);
+    board = BoardHelper.createBoardWithMoves(Mark.X, 4, 5, 6);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForThirdRow() {
-    board = prepareBoardWithMoves(Mark.X, 7, 8, 9);
+    board = BoardHelper.createBoardWithMoves(Mark.X, 7, 8, 9);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForFirstColumn() {
-    board = prepareBoardWithMoves(Mark.O, 1, 4, 7);
+    board = BoardHelper.createBoardWithMoves(Mark.O, 1, 4, 7);
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForSecondColumn() {
-    board = prepareBoardWithMoves(Mark.O, 2, 5, 8);
+    board = BoardHelper.createBoardWithMoves(Mark.O, 2, 5, 8);
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForThirdColumn() {
-    board = prepareBoardWithMoves(Mark.O, 3, 6, 9);
+    board = BoardHelper.createBoardWithMoves(Mark.O, 3, 6, 9);
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForFirstDiagonal() {
-    board = prepareBoardWithMoves(Mark.X, 1, 5, 9);
+    board = BoardHelper.createBoardWithMoves(Mark.X, 1, 5, 9);
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void knowsWinningConditionForSecondDiagonal() {
-    board = prepareBoardWithMoves(Mark.O, 3, 5, 7);
+    board = BoardHelper.createBoardWithMoves(Mark.O, 3, 5, 7);
 
     assertEquals(Mark.O, board.getWinner());
   }
@@ -131,7 +131,7 @@ public class BoardTest {
 
   @Test
   public void isNotPlayableWhenWinnerIsAvailable() {
-    board = prepareBoardWithMoves(Mark.O, 1, 4, 7);
+    board = BoardHelper.createBoardWithMoves(Mark.O, 1, 4, 7);
     assertFalse(board.isPlayable());
   }
 
@@ -155,21 +155,21 @@ public class BoardTest {
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner() {
-    board = prepare4x4BoardWithMoves(Mark.X, 1, 2, 3, 4);
+    board = BoardHelper.createBoardWithMoves(Size.FourByFour, Mark.X, 1, 2, 3, 4);
     assertTrue(board.hasWinner());
     assertEquals(Mark.X, board.getWinner());
   }
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner_column() {
-    board = prepare4x4BoardWithMoves(Mark.O, 1, 5, 9, 13);
+    board = BoardHelper.createBoardWithMoves(Size.FourByFour, Mark.O, 1, 5, 9, 13);
     assertTrue(board.hasWinner());
     assertEquals(Mark.O, board.getWinner());
   }
 
   @Test
   public void size4x4_needsForMarksInALineForAWinner_diagonal() {
-    board = prepare4x4BoardWithMoves(Mark.O, 1, 6, 11, 16);
+    board = BoardHelper.createBoardWithMoves(Size.FourByFour, Mark.O, 1, 6, 11, 16);
     assertTrue(board.hasWinner());
     assertEquals(Mark.O, board.getWinner());
   }
@@ -183,14 +183,14 @@ public class BoardTest {
 
   @Test
   public void freeLocationsContainIndices() {
-    board = prepareBoardWithMoves(Mark.O, 1);
+    board = BoardHelper.createBoardWithMoves(Mark.O, 1);
 
     assertEquals(2, (int) board.getFreeLocations().get(0));
   }
 
   @Test
   public void knowsFreeLocations() {
-    board = prepareBoardWithMoves(Mark.X, 1, 9);
+    board = BoardHelper.createBoardWithMoves(Mark.X, 1, 9);
 
     assertEquals(7, board.getFreeLocations().size());
   }
@@ -205,26 +205,6 @@ public class BoardTest {
   }
 
   private void prepareFullBoard() {
-    for (int i = 1; i <= 9; i++) {
-      board = board.setMove(i, Mark.X);
-    }
-  }
-
-  private Board prepare4x4BoardWithMoves(Mark mark, int ... moves) {
-    return createBoardWithMoves(Size.FourByFour, mark, moves);
-  }
-
-  private Board prepareBoardWithMoves(Mark mark, int ... moves) {
-    return createBoardWithMoves(Size.ThreeByThree, mark, moves);
-  }
-
-  private Board createBoardWithMoves(Size size, Mark mark, int ... moves) {
-    Board board = new Board(size);
-
-    for (int move : moves) {
-      board = board.setMove(move, mark);
-    }
-
-    return board;
+    board = BoardHelper.createBoardWithMoves(Mark.X, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   }
 }
