@@ -17,7 +17,12 @@ public class CommandlineRunner {
 
     Player[] players = PlayerPairsFactory.createPair(playerPairs.get(choice), io);
 
-    return new Game(players[0], players[1], new Board(), io);
+    Map<Integer, Board.Size> boardSizes = Board.getAvailableSizes();
+    choice = ui.requestBoardSize(boardSizes);
+
+    Board board = new Board(boardSizes.get(choice));
+
+    return new Game(players[0], players[1], board, io);
   }
 
   public void play(Game game) {

@@ -47,7 +47,7 @@ public class CommandlineUITest {
   }
 
   @Test
-  public void keepsAskingForValidChoices() {
+  public void keepsAskingForValidChoiceOfGameMode() {
     prepareInput("42\n0\n2");
 
     Map<Integer, PlayerPairsFactory.Pair> examplePairs = new HashMap<>();
@@ -57,6 +57,33 @@ public class CommandlineUITest {
     int choiceMade = ui.requestPlayerPair(examplePairs);
 
     assertEquals(2, choiceMade);
+  }
+
+  @Test
+  public void printsGivenBoardSizes() {
+    prepareInput("1");
+
+    Map<Integer, Board.Size> exampleSizes = new HashMap<>();
+    exampleSizes.put(1, Board.Size.ThreeByThree);
+    exampleSizes.put(2, Board.Size.FourByFour);
+
+    ui.requestBoardSize(exampleSizes);
+
+    assertThat(stdout(), containsString("1. 3x3"));
+    assertThat(stdout(), containsString("2. 4x4"));
+  }
+
+  @Test
+  public void keepsAskingForValidChoiceOfBoardSize() {
+    prepareInput("test\n0\n1");
+
+    Map<Integer, Board.Size> exampleSizes = new HashMap<>();
+    exampleSizes.put(1, Board.Size.ThreeByThree);
+    exampleSizes.put(2, Board.Size.FourByFour);
+
+    int choiceMade = ui.requestBoardSize(exampleSizes);
+
+    assertEquals(1, choiceMade);
   }
 
   @Test

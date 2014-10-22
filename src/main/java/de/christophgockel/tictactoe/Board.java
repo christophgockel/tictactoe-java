@@ -71,6 +71,17 @@ public class Board {
     return Collections.unmodifiableMap(marks);
   }
 
+  public static Map<Integer, Size> getAvailableSizes() {
+    Map<Integer, Size> sizes = new HashMap<>();
+    int index = 1;
+
+    for(Size size : Size.values()) {
+      sizes.put(index++, size);
+    }
+
+    return sizes;
+  }
+
   private int emptyCellCount() {
     int count = 0;
 

@@ -204,6 +204,13 @@ public class BoardTest {
     assertEquals(8, board2.getFreeLocations().size());
   }
 
+  @Test
+  public void providesAvailableBoardSizes() {
+    Map<Integer, Size> sizes = Board.getAvailableSizes();
+
+    assertEquals(Size.values().length, sizes.size());
+  }
+
   private void prepareFullBoard() {
     board = BoardHelper.createBoardWithMoves(Mark.X, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   }
