@@ -3,13 +3,9 @@ package de.christophgockel.tictactoe;
 public class Main {
   public static void main(String[] args) {
     CommandlineIO io = new CommandlineIO(System.in, System.out);
-    Player playerOne = new HumanPlayer(Mark.X, io);
-    Player playerTwo = new HumanPlayer(Mark.O, io);
-    Board board = new Board();
-    Game game = new Game(playerOne, playerTwo, board, io);
+    CommandlineUI ui = new CommandlineUI(System.in, System.out);
+    CommandlineRunner runner = new CommandlineRunner(ui);
 
-    CommandlineRunner runner = new CommandlineRunner(game);
-
-    runner.play();
+    runner.play(runner.createGame(io));
   }
 }

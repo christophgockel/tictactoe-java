@@ -23,8 +23,8 @@ public class GoldenMasterTest{
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     Game game = new Game(playerOne, playerTwo, new Board(), new CommandlineIO(System.in, new PrintStream(baos)));
 
-    CommandlineRunner runner = new CommandlineRunner(game);
-    runner.play();
+    CommandlineRunner runner = new CommandlineRunner(null);
+    runner.play(game);
 
     String expected = "1 | 2 | 3\n" +
       "4 | 5 | 6\n" +
