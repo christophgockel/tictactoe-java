@@ -27,7 +27,7 @@ public class HumanPlayerTest {
 
   @Test
   public void placesItsMoveOnTheBoard() {
-    input.move = 2;
+    input.setNextMove(2);
 
     Board newBoard = player.nextMove(board);
 

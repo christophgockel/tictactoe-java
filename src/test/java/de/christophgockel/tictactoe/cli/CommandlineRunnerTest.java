@@ -13,19 +13,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedList;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class CommandlineRunnerTest {
+public class CommandLineRunnerTest {
   private FakePlayer playerOne;
   private FakePlayer playerTwo;
   private SpyOutput output;
-  private CommandlineRunner runner;
+  private CommandLineRunner runner;
 
   private StubUI ui;
 
@@ -39,7 +38,7 @@ public class CommandlineRunnerTest {
     playerTwo = new FakePlayer(Mark.O);
 
     ui = new StubUI(inputStream, new PrintStream(outputStream));
-    runner = new CommandlineRunner(ui);
+    runner = new CommandLineRunner(ui);
   }
 
   @Test
@@ -65,26 +64,26 @@ public class CommandlineRunnerTest {
     playerOne.setNextMovesToPlay(1, 2, 3);
     playerTwo.setNextMovesToPlay(4, 5);
 
-    runner = new CommandlineRunner(null);
+    runner = new CommandLineRunner(null);
     runner.play(new Game(playerOne, playerTwo, new Board(), output));
 
     assertEquals(playerOne.getMark(), output.announcedWinner);
   }
 
-  private class StubUI extends CommandlineUI {
-    public List<Integer> inputChoices;
+  private class StubUI extends CommandLineUI {
+    public LinkedList<Integer> inputChoices;
 
     public StubUI(InputStream input, PrintStream output) {
       super(input, output);
     }
 
     public void setChoicesToBeMade(Integer... choices) {
-      inputChoices = new ArrayList<>(Arrays.asList(choices));
+      inputChoices = new LinkedList<>(Arrays.asList(choices));
     }
 
     @Override
     public int getInputChoice() {
-      return inputChoices.remove(0);
+      return inputChoices.pop();
     }
   }
 }

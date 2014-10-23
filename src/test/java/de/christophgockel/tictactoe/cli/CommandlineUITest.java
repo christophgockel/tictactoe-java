@@ -19,21 +19,18 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class CommandlineUITest {
+public class CommandLineUITest {
   private ByteArrayOutputStream output;
-  private CommandlineUI ui;
+  private CommandLineUI ui;
 
   @Before
   public void setup() {
-    ByteArrayInputStream input = new ByteArrayInputStream("".getBytes(UTF_8));
-    output = new ByteArrayOutputStream();
-
-    ui = new CommandlineUI(input, new PrintStream(output));
+    prepareUIWithInput("");
   }
 
   @Test
   public void printsGivenPlayerPairs() {
-    prepareInput("1");
+    prepareUIWithInput("1");
 
     Map<Integer, PlayerPairsFactory.Pair> examplePairs = new HashMap<>();
     examplePairs.put(1, PlayerPairsFactory.Pair.HumanHuman);
@@ -47,7 +44,7 @@ public class CommandlineUITest {
 
   @Test
   public void keepsAskingForValidChoiceOfGameMode() {
-    prepareInput("42\n0\n2");
+    prepareUIWithInput("42\n0\n2");
 
     Map<Integer, PlayerPairsFactory.Pair> examplePairs = new HashMap<>();
     examplePairs.put(1, PlayerPairsFactory.Pair.HumanHuman);
@@ -60,7 +57,7 @@ public class CommandlineUITest {
 
   @Test
   public void printsGivenBoardSizes() {
-    prepareInput("1");
+    prepareUIWithInput("1");
 
     Map<Integer, Board.Size> exampleSizes = new HashMap<>();
     exampleSizes.put(1, Board.Size.ThreeByThree);
@@ -74,7 +71,7 @@ public class CommandlineUITest {
 
   @Test
   public void keepsAskingForValidChoiceOfBoardSize() {
-    prepareInput("test\n0\n1");
+    prepareUIWithInput("test\n0\n1");
 
     Map<Integer, Board.Size> exampleSizes = new HashMap<>();
     exampleSizes.put(1, Board.Size.ThreeByThree);
@@ -88,7 +85,7 @@ public class CommandlineUITest {
   @Test
   public void returnsInputChoiceFromInput() {
     InputStream input = new ByteArrayInputStream("12".getBytes(UTF_8));
-    CommandlineUI ui = new CommandlineUI(input, new PrintStream(output));
+    CommandLineUI ui = new CommandLineUI(input, new PrintStream(output));
 
     assertEquals(12, ui.getInputChoice());
   }
@@ -158,7 +155,7 @@ public class CommandlineUITest {
   @Test
   public void getsNextMoveFromItsStandardInput() {
     InputStream input = new ByteArrayInputStream("42".getBytes(UTF_8));
-    CommandlineUI ui = new CommandlineUI(input, new PrintStream(output));
+    CommandLineUI ui = new CommandLineUI(input, new PrintStream(output));
 
     assertEquals(42, ui.getMove());
   }
@@ -181,9 +178,11 @@ public class CommandlineUITest {
     assertThat(stdout(), containsString("Invalid move."));
   }
 
-  private void prepareInput(String inputString) {
+  private void prepareUIWithInput(String inputString) {
     ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes(UTF_8));
-    ui = new CommandlineUI(input, new PrintStream(output));
+    output = new ByteArrayOutputStream();
+
+    ui = new CommandLineUI(input, new PrintStream(output));
   }
 
   private String stdout() {

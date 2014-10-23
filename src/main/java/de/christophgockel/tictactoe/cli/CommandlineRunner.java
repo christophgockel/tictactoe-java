@@ -9,10 +9,10 @@ import java.util.Map;
 
 import static de.christophgockel.tictactoe.game.PlayerPairsFactory.Pair;
 
-public class CommandlineRunner {
-  private final CommandlineUI ui;
+public class CommandLineRunner {
+  private final CommandLineUI ui;
 
-  public CommandlineRunner(CommandlineUI ui) {
+  public CommandLineRunner(CommandLineUI ui) {
     this.ui = ui;
   }
 

@@ -6,11 +6,11 @@ import java.io.*;
 import java.util.Map;
 import java.util.Set;
 
-public class CommandlineUI implements Output, Input {
+public class CommandLineUI implements Output, Input {
   private final PrintStream output;
   private final BufferedReader reader;
 
-  public CommandlineUI(InputStream input, PrintStream output) {
+  public CommandLineUI(InputStream input, PrintStream output) {
     this.output = output;
 
     this.reader = new BufferedReader(new InputStreamReader(input));

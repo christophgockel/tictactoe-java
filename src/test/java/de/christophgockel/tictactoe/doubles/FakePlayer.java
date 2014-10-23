@@ -4,14 +4,13 @@ import de.christophgockel.tictactoe.game.Board;
 import de.christophgockel.tictactoe.game.Mark;
 import de.christophgockel.tictactoe.game.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import static java.util.Arrays.asList;
 
 public class FakePlayer implements Player {
   private final Mark mark;
-  private List<Integer> moves = new ArrayList<>();
+  private LinkedList<Integer> moves = new LinkedList<>();
 
   public FakePlayer(Mark mark) {
     this.mark = mark;
@@ -19,7 +18,7 @@ public class FakePlayer implements Player {
 
   @Override
   public Board nextMove(Board board) {
-    return board.setMove(moves.remove(0), mark);
+    return board.setMove(moves.pop(), mark);
   }
 
   @Override
@@ -28,6 +27,6 @@ public class FakePlayer implements Player {
   }
 
   public void setNextMovesToPlay(Integer... moves) {
-    this.moves = new ArrayList<>(asList(moves));
+    this.moves = new LinkedList<>(asList(moves));
   }
 }

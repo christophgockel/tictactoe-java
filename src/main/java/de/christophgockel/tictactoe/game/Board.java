@@ -59,11 +59,12 @@ public class Board {
 
   public Board setMove(int move, Mark mark) {
     int convertedMove = move - 1;
-    List<Mark> newCells = new ArrayList<>(cells);
 
     if (isInvalidMove(convertedMove)) {
       throw new InvalidMove(move);
     }
+
+    List<Mark> newCells = new ArrayList<>(cells);
 
     newCells.set(convertedMove, mark);
 
