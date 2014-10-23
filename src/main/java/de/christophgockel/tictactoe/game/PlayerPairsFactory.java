@@ -10,7 +10,7 @@ public class PlayerPairsFactory {
     HumanHuman,
     HumanComputer,
     ComputerHuman,
-    ComputerComputer;
+    ComputerComputer
   }
 
   public static Player[] createPair(Pair requestedPair, Input input) {
