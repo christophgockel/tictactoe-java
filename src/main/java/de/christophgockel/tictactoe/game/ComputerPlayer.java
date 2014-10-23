@@ -67,16 +67,11 @@ public class ComputerPlayer implements Player {
   }
 
   private double score(Board board, Mark mark) {
-    int movesMade = 9 - board.getFreeLocations().size();
+    return score(board) * (board.getWinner() == mark ? 1 : -1);
+  }
 
-    if (board.hasWinner()) {
-      if (board.getWinner() == mark) {
-        return 1.0 / movesMade;
-      } else {
-        return -1.0 / movesMade;
-      }
-    }
-    return 0.0;
+  private double score(Board board) {
+    return 1.0 / board.getMoveCount();
   }
 
   private class RatedMove {
