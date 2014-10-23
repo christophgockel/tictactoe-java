@@ -1,7 +1,7 @@
 package de.christophgockel.tictactoe;
 
-import de.christophgockel.tictactoe.fakes.FakeOutput;
-import de.christophgockel.tictactoe.fakes.FakePlayer;
+import de.christophgockel.tictactoe.doubles.SpyOutput;
+import de.christophgockel.tictactoe.doubles.FakePlayer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class GameTest {
   private FakePlayer playerOne;
   private FakePlayer playerTwo;
   private Board board;
-  private FakeOutput output;
+  private SpyOutput output;
   private Game game;
 
   @Before
@@ -21,7 +21,7 @@ public class GameTest {
     playerOne = new FakePlayer(X);
     playerTwo = new FakePlayer(O);
     board     = new Board();
-    output    = new FakeOutput();
+    output    = new SpyOutput();
 
     game = new Game(playerOne, playerTwo, board, output);
   }

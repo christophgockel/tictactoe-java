@@ -1,17 +1,17 @@
-package de.christophgockel.tictactoe.fakes;
+package de.christophgockel.tictactoe.doubles;
 
 import de.christophgockel.tictactoe.Board;
 import de.christophgockel.tictactoe.Mark;
 import de.christophgockel.tictactoe.Output;
 
-public class FakeOutput implements Output {
+public class SpyOutput implements Output {
   public Mark announcedWinner;
   public Mark announcedPlayer;
   public boolean announcedDraw;
   public String invalidMoveMessage;
   public Board showedBoard;
 
-  public FakeOutput() {
+  public SpyOutput() {
     announcedDraw = false;
     invalidMoveMessage = "";
   }

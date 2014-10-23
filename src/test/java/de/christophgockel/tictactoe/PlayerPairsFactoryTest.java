@@ -1,6 +1,6 @@
 package de.christophgockel.tictactoe;
 
-import de.christophgockel.tictactoe.fakes.FakeInput;
+import de.christophgockel.tictactoe.doubles.StubInput;
 import org.junit.Test;
 
 import static de.christophgockel.tictactoe.PlayerPairsFactory.Pair.*;
@@ -14,7 +14,7 @@ public class PlayerPairsFactoryTest {
 
   @Test
   public void canCreatePairWithHumanAndHuman() {
-    Player[] players = PlayerPairsFactory.createPair(HumanHuman, new FakeInput());
+    Player[] players = PlayerPairsFactory.createPair(HumanHuman, new StubInput());
 
     assertEquals(HumanPlayer.class, players[0].getClass());
     assertEquals(HumanPlayer.class, players[1].getClass());
@@ -22,7 +22,7 @@ public class PlayerPairsFactoryTest {
 
   @Test
   public void canCreatePairWithHumanAndComputer() {
-    Player[] players = PlayerPairsFactory.createPair(HumanComputer, new FakeInput());
+    Player[] players = PlayerPairsFactory.createPair(HumanComputer, new StubInput());
 
     assertEquals(HumanPlayer.class, players[0].getClass());
     assertEquals(ComputerPlayer.class, players[1].getClass());
@@ -30,7 +30,7 @@ public class PlayerPairsFactoryTest {
 
   @Test
   public void canCreatePairWithComputerAndHuman() {
-    Player[] players = PlayerPairsFactory.createPair(ComputerHuman, new FakeInput());
+    Player[] players = PlayerPairsFactory.createPair(ComputerHuman, new StubInput());
 
     assertEquals(ComputerPlayer.class, players[0].getClass());
     assertEquals(HumanPlayer.class, players[1].getClass());
@@ -38,7 +38,7 @@ public class PlayerPairsFactoryTest {
 
   @Test
   public void canCreatePairWithComputerAndComputer() {
-    Player[] players = PlayerPairsFactory.createPair(ComputerComputer, new FakeInput());
+    Player[] players = PlayerPairsFactory.createPair(ComputerComputer, new StubInput());
 
     assertEquals(ComputerPlayer.class, players[0].getClass());
     assertEquals(ComputerPlayer.class, players[1].getClass());

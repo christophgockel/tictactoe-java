@@ -1,4 +1,4 @@
-package de.christophgockel.tictactoe.fakes;
+package de.christophgockel.tictactoe.doubles;
 
 import de.christophgockel.tictactoe.Board;
 import de.christophgockel.tictactoe.Mark;

@@ -1,6 +1,6 @@
 package de.christophgockel.tictactoe;
 
-import de.christophgockel.tictactoe.fakes.FakeInput;
+import de.christophgockel.tictactoe.doubles.StubInput;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,12 +9,12 @@ import static org.junit.Assert.assertEquals;
 public class HumanPlayerTest {
   private Player player;
   private Mark mark;
-  private FakeInput input;
+  private StubInput input;
   private Board board;
 
   @Before
   public void setup() {
-    input = new FakeInput();
+    input = new StubInput();
     mark = Mark.X;
     player = new HumanPlayer(mark, input);
     board = new Board();

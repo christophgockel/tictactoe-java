@@ -1,7 +1,7 @@
 package de.christophgockel.tictactoe;
 
-import de.christophgockel.tictactoe.fakes.FakeOutput;
-import de.christophgockel.tictactoe.fakes.FakePlayer;
+import de.christophgockel.tictactoe.doubles.SpyOutput;
+import de.christophgockel.tictactoe.doubles.FakePlayer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 public class CommandlineRunnerTest {
   private FakePlayer playerOne;
   private FakePlayer playerTwo;
-  private FakeOutput output;
+  private SpyOutput output;
   private CommandlineRunner runner;
 
   private ByteArrayInputStream inputStream;
@@ -32,7 +32,7 @@ public class CommandlineRunnerTest {
     inputStream = new ByteArrayInputStream("".getBytes(UTF_8));
     outputStream = new ByteArrayOutputStream();
 
-    output = new FakeOutput();
+    output = new SpyOutput();
     playerOne = new FakePlayer(Mark.X);
     playerTwo = new FakePlayer(Mark.O);
 

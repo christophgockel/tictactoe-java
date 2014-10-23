@@ -1,6 +1,6 @@
 package de.christophgockel.tictactoe;
 
-import de.christophgockel.tictactoe.fakes.FakePlayer;
+import de.christophgockel.tictactoe.doubles.FakePlayer;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;

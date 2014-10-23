@@ -1,11 +1,11 @@
-package de.christophgockel.tictactoe.fakes;
+package de.christophgockel.tictactoe.doubles;
 
 import de.christophgockel.tictactoe.Input;
 
-public class FakeInput implements Input {
+public class StubInput implements Input {
   public int move;
 
-  public FakeInput() {
+  public StubInput() {
     move = 0;
   }
 
