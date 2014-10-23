@@ -23,14 +23,12 @@ public class CommandlineRunnerTest {
   private SpyOutput output;
   private CommandlineRunner runner;
 
-  private ByteArrayInputStream inputStream;
-  private ByteArrayOutputStream outputStream;
   private StubUI ui;
 
   @Before
   public void setup() {
-    inputStream = new ByteArrayInputStream("".getBytes(UTF_8));
-    outputStream = new ByteArrayOutputStream();
+    ByteArrayInputStream inputStream = new ByteArrayInputStream("".getBytes(UTF_8));
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     output = new SpyOutput();
     playerOne = new FakePlayer(Mark.X);
@@ -44,9 +42,7 @@ public class CommandlineRunnerTest {
   public void setsUpANewGame() {
     ui.setChoicesToBeMade(1, 1);
 
-    CommandlineIO io = new CommandlineIO(inputStream, new PrintStream(outputStream));
-
-    assertNotNull(runner.createGame(io));
+    assertNotNull(runner.createGame());
   }
 
   @Test

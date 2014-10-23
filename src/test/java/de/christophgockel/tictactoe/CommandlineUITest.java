@@ -97,4 +97,92 @@ public class CommandlineUITest {
   private String stdout() {
     return output.toString();
   }
+
+  @Test
+  public void printsDrawMessage() {
+    ui.showDraw();
+
+    assertThat(stdout(), containsString("Game ended in a draw."));
+  }
+
+  @Test
+  public void printsWinnerX() {
+    ui.showWinner(Mark.X);
+
+    assertThat(stdout(), containsString("Winner: X"));
+  }
+
+  @Test
+  public void printsWinnerO() {
+    ui.showWinner(Mark.O);
+
+    assertThat(stdout(), containsString("Winner: O"));
+  }
+
+  @Test
+  public void printsEmptyBoard() {
+    Board board = new Board();
+
+    ui.show(board);
+
+    assertThat(stdout(), containsString("1 | 2 | 3"));
+    assertThat(stdout(), containsString("4 | 5 | 6"));
+    assertThat(stdout(), containsString("7 | 8 | 9"));
+  }
+
+  @Test
+  public void printsEmpty4x4Board() {
+    Board board = new Board(Board.Size.FourByFour);
+
+    ui.show(board);
+
+    assertThat(stdout(), containsString(" 1 |  2 |  3 |  4"));
+    assertThat(stdout(), containsString(" 5 |  6 |  7 |  8"));
+    assertThat(stdout(), containsString(" 9 | 10 | 11 | 12"));
+    assertThat(stdout(), containsString("13 | 14 | 15 | 16"));
+  }
+
+  @Test
+  public void printsBoardWithContent() {
+    Board board = BoardHelper.createBoardWithMoves(Mark.X, 1, 5, 9);
+
+    ui.show(board);
+
+    assertThat(stdout(), containsString("X | 2 | 3"));
+    assertThat(stdout(), containsString("4 | X | 6"));
+    assertThat(stdout(), containsString("7 | 8 | X"));
+  }
+
+  @Test
+  public void asksForNextMove() {
+    ui.getMove();
+
+    assertThat(stdout(), containsString("Next move:"));
+  }
+
+  @Test
+  public void getsNextMoveFromItsStandardInput() {
+    InputStream input = new ByteArrayInputStream("42".getBytes(UTF_8));
+    CommandlineUI ui = new CommandlineUI(input, new PrintStream(output));
+
+    assertEquals(42, ui.getMove());
+  }
+
+  @Test
+  public void announcesNextPlayerX() {
+    ui.showNextPlayer(Mark.X);
+    assertThat(stdout(), containsString("Next Player: X"));
+  }
+
+  @Test
+  public void announcesNextPlayerO() {
+    ui.showNextPlayer(Mark.O);
+    assertThat(stdout(), containsString("Next Player: O"));
+  }
+
+  @Test
+  public void showsAnInvalidMoveMessage() {
+    ui.showInvalidMoveMessage();
+    assertThat(stdout(), containsString("Invalid move."));
+  }
 }

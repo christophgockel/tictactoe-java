@@ -21,7 +21,7 @@ public class GoldenMasterTest{
     playerTwo.setNextMovesToPlay(4,5);
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    Game game = new Game(playerOne, playerTwo, new Board(), new CommandlineIO(System.in, new PrintStream(baos)));
+    Game game = new Game(playerOne, playerTwo, new Board(), new CommandlineUI(System.in, new PrintStream(baos)));
 
     CommandlineRunner runner = new CommandlineRunner(null);
     runner.play(game);
