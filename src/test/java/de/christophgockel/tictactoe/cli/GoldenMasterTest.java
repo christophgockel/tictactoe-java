@@ -1,13 +1,15 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.cli;
 
 import de.christophgockel.tictactoe.doubles.FakePlayer;
+import de.christophgockel.tictactoe.game.Board;
+import de.christophgockel.tictactoe.game.Game;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static de.christophgockel.tictactoe.Mark.O;
-import static de.christophgockel.tictactoe.Mark.X;
+import static de.christophgockel.tictactoe.game.Mark.O;
+import static de.christophgockel.tictactoe.game.Mark.X;
 import static org.junit.Assert.assertEquals;
 
 public class GoldenMasterTest{

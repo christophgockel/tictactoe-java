@@ -1,4 +1,4 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
 public enum Mark {
   O, X;

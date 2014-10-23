@@ -1,8 +1,8 @@
 package de.christophgockel.tictactoe.doubles;
 
-import de.christophgockel.tictactoe.Board;
-import de.christophgockel.tictactoe.Mark;
-import de.christophgockel.tictactoe.Player;
+import de.christophgockel.tictactoe.game.Board;
+import de.christophgockel.tictactoe.game.Mark;
+import de.christophgockel.tictactoe.game.Player;
 
 import java.util.ArrayList;
 import java.util.List;

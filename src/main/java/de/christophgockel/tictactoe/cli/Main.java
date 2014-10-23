@@ -1,4 +1,4 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.cli;
 
 public class Main {
   public static void main(String[] args) {

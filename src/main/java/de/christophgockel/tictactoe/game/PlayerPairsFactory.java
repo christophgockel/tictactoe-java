@@ -1,9 +1,9 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.christophgockel.tictactoe.PlayerPairsFactory.Pair.*;
+import static de.christophgockel.tictactoe.game.PlayerPairsFactory.Pair.*;
 
 public class PlayerPairsFactory {
   public enum Pair {

@@ -1,4 +1,4 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
 public class Game {
   public class Over extends RuntimeException {

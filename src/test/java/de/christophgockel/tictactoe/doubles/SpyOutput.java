@@ -1,8 +1,8 @@
 package de.christophgockel.tictactoe.doubles;
 
-import de.christophgockel.tictactoe.Board;
-import de.christophgockel.tictactoe.Mark;
-import de.christophgockel.tictactoe.Output;
+import de.christophgockel.tictactoe.game.Board;
+import de.christophgockel.tictactoe.game.Mark;
+import de.christophgockel.tictactoe.game.Output;
 
 public class SpyOutput implements Output {
   public Mark announcedWinner;

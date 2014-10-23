@@ -1,4 +1,6 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.cli;
+
+import de.christophgockel.tictactoe.game.*;
 
 import java.io.*;
 import java.util.Map;

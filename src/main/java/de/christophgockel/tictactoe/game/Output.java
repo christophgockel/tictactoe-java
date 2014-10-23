@@ -1,4 +1,4 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
 public interface Output {
   void show(Board board);

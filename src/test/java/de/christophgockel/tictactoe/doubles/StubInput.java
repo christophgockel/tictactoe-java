@@ -1,6 +1,6 @@
 package de.christophgockel.tictactoe.doubles;
 
-import de.christophgockel.tictactoe.Input;
+import de.christophgockel.tictactoe.game.Input;
 
 public class StubInput implements Input {
   public int move;

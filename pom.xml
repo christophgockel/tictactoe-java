@@ -30,7 +30,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>de.christophgockel.tictactoe.Main</mainClass>
+                            <mainClass>de.christophgockel.tictactoe.cli.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

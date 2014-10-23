@@ -1,4 +1,4 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

@@ -1,9 +1,9 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
 import de.christophgockel.tictactoe.doubles.StubInput;
 import org.junit.Test;
 
-import static de.christophgockel.tictactoe.PlayerPairsFactory.Pair.*;
+import static de.christophgockel.tictactoe.game.PlayerPairsFactory.Pair.*;
 import static org.junit.Assert.assertEquals;
 
 public class PlayerPairsFactoryTest {

@@ -1,7 +1,11 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.cli;
 
-import de.christophgockel.tictactoe.doubles.SpyOutput;
+import de.christophgockel.tictactoe.helpers.BoardHelper;
 import de.christophgockel.tictactoe.doubles.FakePlayer;
+import de.christophgockel.tictactoe.doubles.SpyOutput;
+import de.christophgockel.tictactoe.game.Board;
+import de.christophgockel.tictactoe.game.Game;
+import de.christophgockel.tictactoe.game.Mark;
 import org.junit.Before;
 import org.junit.Test;
 

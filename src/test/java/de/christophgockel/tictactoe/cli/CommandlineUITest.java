@@ -1,5 +1,9 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.cli;
 
+import de.christophgockel.tictactoe.helpers.BoardHelper;
+import de.christophgockel.tictactoe.game.Board;
+import de.christophgockel.tictactoe.game.Mark;
+import de.christophgockel.tictactoe.game.PlayerPairsFactory;
 import org.junit.Before;
 import org.junit.Test;
 

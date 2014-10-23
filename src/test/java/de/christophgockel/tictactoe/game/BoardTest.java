@@ -1,11 +1,12 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
+import de.christophgockel.tictactoe.helpers.BoardHelper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
 
-import static de.christophgockel.tictactoe.Board.Size;
+import static de.christophgockel.tictactoe.game.Board.Size;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
 

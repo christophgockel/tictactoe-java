@@ -1,4 +1,4 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.game;
 
 public class HumanPlayer implements Player {
   private final Mark mark;

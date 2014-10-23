@@ -1,4 +1,7 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.helpers;
+
+import de.christophgockel.tictactoe.game.Board;
+import de.christophgockel.tictactoe.game.Mark;
 
 public class BoardHelper {
   public static Board createBoardWithMoves(Mark mark, int ... moves) {

@@ -1,8 +1,13 @@
-package de.christophgockel.tictactoe;
+package de.christophgockel.tictactoe.cli;
+
+import de.christophgockel.tictactoe.game.Board;
+import de.christophgockel.tictactoe.game.Game;
+import de.christophgockel.tictactoe.game.Player;
+import de.christophgockel.tictactoe.game.PlayerPairsFactory;
 
 import java.util.Map;
 
-import static de.christophgockel.tictactoe.PlayerPairsFactory.Pair;
+import static de.christophgockel.tictactoe.game.PlayerPairsFactory.Pair;
 
 public class CommandlineRunner {
   private final CommandlineUI ui;
