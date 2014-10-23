@@ -211,6 +211,13 @@ public class BoardTest {
     assertEquals(Size.values().length, sizes.size());
   }
 
+  @Test
+  public void hasASize() {
+    Board board = new Board(Size.FourByFour);
+
+    assertEquals(Size.FourByFour, board.getSize());
+  }
+
   private void prepareFullBoard() {
     board = BoardHelper.createBoardWithMoves(Mark.X, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   }

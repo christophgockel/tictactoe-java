@@ -108,6 +108,52 @@ public class ComputerPlayerTest {
     assertThat(boardWithComputerMovesAt(3, 5), receivesMove(7));
   }
 
+  @Test
+  public void blocksMovesOn4x4Boards() {
+    Board board = new Board(Board.Size.FourByFour);
+
+    board = board.setMove(1, mark.getOpponent())
+                 .setMove(3, mark)
+                 .setMove(5, mark.getOpponent())
+                 .setMove(7, mark)
+                 .setMove(10, mark)
+                 .setMove(11, mark)
+                 .setMove(12, mark)
+                 .setMove(13, mark.getOpponent());
+
+    board = computer.nextMove(board);
+
+    assertEquals(mark, board.getMarks().get(9));
+  }
+
+  @Test
+  public void blockWinsOn4x4Boards() {
+    Board board = new Board(Board.Size.FourByFour);
+
+    board = board.setMove(1, mark)
+                 .setMove(2, mark.getOpponent())
+                 .setMove(3, mark)
+                 .setMove(4, mark)
+                 .setMove(10, mark.getOpponent())
+                 .setMove(13, mark.getOpponent())
+                 .setMove(14, mark.getOpponent())
+                 .setMove(15, mark.getOpponent())
+                 .setMove(16, mark);
+
+    board = computer.nextMove(board);
+
+    assertEquals(mark, board.getMarks().get(6));
+  }
+
+  @Test (timeout = 3000)
+  public void firstMoveOnANew4x4BoardDoesNotTakeTooLong() {
+    Board board = new Board(Board.Size.FourByFour);
+
+    Board newBoard = computer.nextMove(board);
+
+    assertEquals(15, newBoard.getFreeLocations().size());
+  }
+
   private Board boardWithOpponentMovesAt(int... moves) {
     return boardWithMoves(mark.getOpponent(), moves);
   }

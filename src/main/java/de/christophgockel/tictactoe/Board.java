@@ -26,6 +26,10 @@ public class Board {
     this.cells = cells;
   }
 
+  public Size getSize() {
+    return size;
+  }
+
   public boolean isPlayable() {
     return emptyCellCount() > 0 && !hasWinner();
   }

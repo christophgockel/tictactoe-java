@@ -3,12 +3,16 @@ package de.christophgockel.tictactoe;
 public class ComputerPlayer implements Player {
   private final Mark mark;
 
+  private int initialMovesMade;
+
   public ComputerPlayer(Mark mark) {
     this.mark = mark;
   }
 
   @Override
   public Board nextMove(Board board) {
+    initialMovesMade = board.getSize().getNumberOfCells() - board.getFreeLocations().size();
+
     int move = bestMove(board);
     return board.setMove(move, mark);
   }
@@ -27,7 +31,7 @@ public class ComputerPlayer implements Player {
     int bestMove = -1;
     double bestScore = -1;
 
-    if (!board.isPlayable()) {
+    if (isRateable(board)) {
       return new RatedMove(score(board, mark), bestMove);
     }
 
@@ -49,6 +53,12 @@ public class ComputerPlayer implements Player {
     }
 
     return new RatedMove(bestScore, bestMove);
+  }
+
+  private boolean isRateable(Board board) {
+    int movesMade = board.getSize().getNumberOfCells() - board.getFreeLocations().size();
+
+    return !board.isPlayable() || ((movesMade - initialMovesMade) > (board.getSize().getSideLength()));
   }
 
   private double score(Board board, Mark mark) {
