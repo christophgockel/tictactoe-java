@@ -212,10 +212,17 @@ public class BoardTest {
   }
 
   @Test
-  public void hasASize() {
+  public void knowsItsSideLength() {
     Board board = new Board(Size.FourByFour);
 
-    assertEquals(Size.FourByFour, board.getSize());
+    assertEquals(Size.FourByFour.getSideLength(), board.getSideLength());
+  }
+
+  @Test
+  public void knowsHowManyMovesWereMade() {
+    Board board = new Board().setMove(1, Mark.X).setMove(2, Mark.O);
+
+    assertEquals(2, board.getMoveCount());
   }
 
   private void prepareFullBoard() {

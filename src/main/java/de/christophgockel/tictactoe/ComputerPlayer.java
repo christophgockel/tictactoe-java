@@ -3,7 +3,7 @@ package de.christophgockel.tictactoe;
 public class ComputerPlayer implements Player {
   private final Mark mark;
 
-  private int initialMovesMade;
+  private int initialMoveCount;
 
   public ComputerPlayer(Mark mark) {
     this.mark = mark;
@@ -11,7 +11,7 @@ public class ComputerPlayer implements Player {
 
   @Override
   public Board nextMove(Board board) {
-    initialMovesMade = board.getSize().getNumberOfCells() - board.getFreeLocations().size();
+    initialMoveCount = board.getMoveCount();
 
     int move = bestMove(board);
     return board.setMove(move, mark);
@@ -56,9 +56,15 @@ public class ComputerPlayer implements Player {
   }
 
   private boolean isRateable(Board board) {
-    int movesMade = board.getSize().getNumberOfCells() - board.getFreeLocations().size();
+    return !board.isPlayable() || maximumSearchDepthReached(board);
+  }
 
-    return !board.isPlayable() || ((movesMade - initialMovesMade) > (board.getSize().getSideLength()));
+  private boolean maximumSearchDepthReached(Board board) {
+    return searchDepthOf(board) > board.getSideLength();
+  }
+
+  private int searchDepthOf(Board board) {
+    return board.getMoveCount() - initialMoveCount;
   }
 
   private double score(Board board, Mark mark) {

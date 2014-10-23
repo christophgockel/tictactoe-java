@@ -26,8 +26,12 @@ public class Board {
     this.cells = cells;
   }
 
-  public Size getSize() {
-    return size;
+  public int getSideLength() {
+    return size.getSideLength();
+  }
+
+  public int getMoveCount() {
+    return size.getNumberOfCells() - getFreeLocations().size();
   }
 
   public boolean isPlayable() {
