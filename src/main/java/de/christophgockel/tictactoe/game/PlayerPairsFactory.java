@@ -7,10 +7,20 @@ import static de.christophgockel.tictactoe.game.PlayerPairsFactory.Pair.*;
 
 public class PlayerPairsFactory {
   public enum Pair {
-    HumanHuman,
-    HumanComputer,
-    ComputerHuman,
-    ComputerComputer
+    HumanHuman("Human vs. Human"),
+    HumanComputer("Human vs. Computer"),
+    ComputerHuman("Computer vs. Human"),
+    ComputerComputer("Computer vs. Computer");
+
+    private String description;
+
+    private Pair(String description) {
+      this.description = description;
+    }
+
+    public String getDescription() {
+      return description;
+    }
   }
 
   public static Player[] createPair(Pair requestedPair, Input input) {

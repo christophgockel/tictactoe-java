@@ -20,7 +20,7 @@ public class CommandlineUI implements Output, Input {
     output.println("Game Mode:");
 
     for (Map.Entry<Integer, PlayerPairsFactory.Pair> entry : pairs.entrySet()) {
-      output.println(String.format("%d. %s", entry.getKey(), getPairDescription(entry.getValue())));
+      output.println(String.format("%d. %s", entry.getKey(), entry.getValue().getDescription()));
     }
 
     return getValidInput(pairs.keySet());
@@ -30,17 +30,10 @@ public class CommandlineUI implements Output, Input {
     output.println("Board Size:");
 
     for (Map.Entry<Integer, Board.Size> entry : sizes.entrySet()) {
-      output.println(String.format("%d. %s", entry.getKey(), getSizeDescription(entry.getValue())));
+      output.println(String.format("%d. %s", entry.getKey(), entry.getValue().getDescription()));
     }
 
     return getValidInput(sizes.keySet());
-  }
-
-  private String getSizeDescription(Board.Size size) {
-    String stringSize = size.toString();
-    return stringSize.replace("Three", "3")
-                     .replace("Four", "4")
-                     .replace("By", "x");
   }
 
   private int getValidInput(Set<Integer> choices) {
@@ -54,16 +47,6 @@ public class CommandlineUI implements Output, Input {
 
   private boolean isInvalidChoice(Integer choice, Set<Integer> choices) {
     return !choices.contains(choice);
-  }
-
-  private String getPairDescription(PlayerPairsFactory.Pair pair) {
-    String[] separatedWords = getCamelCaseSeparatedStrings(pair.toString());
-
-    return separatedWords[0] + " vs. " + separatedWords[1];
-  }
-
-  private String[] getCamelCaseSeparatedStrings(String string) {
-    return string.split("(?<!^)(?=[A-Z])");
   }
 
   public int getInputChoice() {
@@ -148,5 +131,4 @@ public class CommandlineUI implements Output, Input {
   public void showInvalidMoveMessage() {
     output.println("Invalid move.");
   }
-
 }

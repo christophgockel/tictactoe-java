@@ -35,7 +35,11 @@ public class Board {
   }
 
   public boolean isPlayable() {
-    return emptyCellCount() > 0 && !hasWinner();
+    return hasRemainingMoves() && !hasWinner();
+  }
+
+  private boolean hasRemainingMoves() {
+    return getFreeLocations().size() > 0;
   }
 
   public boolean hasWinner() {
@@ -88,18 +92,6 @@ public class Board {
     }
 
     return sizes;
-  }
-
-  private int emptyCellCount() {
-    int count = 0;
-
-    for (Mark mark : cells) {
-      if (mark == null) {
-        count++;
-      }
-    }
-
-    return count;
   }
 
   private List<Line> getLineCombinations() {
@@ -187,12 +179,15 @@ public class Board {
   }
 
   public enum Size {
-    ThreeByThree(3), FourByFour(4);
+    ThreeByThree(3, "3x3"),
+    FourByFour(4, "4x4");
 
     private final int sideLength;
+    private final String description;
 
-    private Size(int sideLength) {
+    private Size(int sideLength, String description) {
       this.sideLength = sideLength;
+      this.description = description;
     }
 
     public int getNumberOfCells() {
@@ -202,6 +197,10 @@ public class Board {
     public int getSideLength() {
       return sideLength;
     }
+
+    public String getDescription() {
+      return description;
+    }
   }
 
   private class Line {
@@ -209,16 +208,6 @@ public class Board {
 
     public Line(List<Mark> marks) {
       this.marks = marks;
-    }
-
-    public boolean containsOnly(Mark mark) {
-      for (Mark lineMark : marks) {
-        if (!mark.equals(lineMark)) {
-          return false;
-        }
-      }
-
-      return true;
     }
 
     public boolean containsOnlySame() {
@@ -235,6 +224,16 @@ public class Board {
 
     public Mark get(int index) {
       return marks.get(index);
+    }
+
+    private boolean containsOnly(Mark mark) {
+      for (Mark lineMark : marks) {
+        if (!mark.equals(lineMark)) {
+          return false;
+        }
+      }
+
+      return true;
     }
   }
 }
