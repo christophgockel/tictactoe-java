@@ -1,13 +1,10 @@
 package de.christophgockel.tictactoe.game;
 
 public class Game {
-  public class Over extends RuntimeException {
-  }
-
+  private final Output output;
   private Player currentPlayer;
   private Player otherPlayer;
   private Board board;
-  private final Output output;
 
   public Game(Player playerOne, Player playerTwo, Board board, Output output) {
     this.currentPlayer = playerOne;
@@ -67,5 +64,8 @@ public class Game {
     Player previousPlayer = currentPlayer;
     currentPlayer = otherPlayer;
     otherPlayer = previousPlayer;
+  }
+
+  public class Over extends RuntimeException {
   }
 }

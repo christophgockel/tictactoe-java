@@ -104,7 +104,7 @@ public class BoardTest {
     assertEquals(Mark.O, board.getWinner());
   }
 
-  @Test (expected = Board.InvalidMove.class)
+  @Test(expected = Board.InvalidMove.class)
   public void throwsExceptionWhenPlacingInvalidMove_lowerBound() {
     board.setMove(0, Mark.O);
   }
@@ -120,12 +120,12 @@ public class BoardTest {
     }
   }
 
-  @Test (expected = Board.InvalidMove.class)
+  @Test(expected = Board.InvalidMove.class)
   public void throwsExceptionWhenPlacingInvalidMove_upperBound() {
     board.setMove(10, Mark.O);
   }
 
-  @Test (expected = Board.InvalidMove.class)
+  @Test(expected = Board.InvalidMove.class)
   public void throwsExceptionWhenPlacingInvalidMove_alreadyOccupiedSpot() {
     board.setMove(2, Mark.O).setMove(2, Mark.X);
   }
@@ -142,13 +142,13 @@ public class BoardTest {
     assertEquals(16, board.getMarks().size());
   }
 
-  @Test (expected = Board.InvalidMove.class)
+  @Test(expected = Board.InvalidMove.class)
   public void size4x4_lowerBoundary() {
     Board board = new Board(Size.FourByFour);
     board.setMove(0, Mark.O);
   }
 
-  @Test (expected = Board.InvalidMove.class)
+  @Test(expected = Board.InvalidMove.class)
   public void size4x4_upperBoundary() {
     Board board = new Board(Size.FourByFour);
     board.setMove(17, Mark.O);

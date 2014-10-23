@@ -36,19 +36,6 @@ public class CommandlineUI implements Output, Input {
     return getValidInput(sizes.keySet());
   }
 
-  private int getValidInput(Set<Integer> choices) {
-    Integer input = null;
-    while(input == null || isInvalidChoice(input, choices)){
-      input = getInputChoice();
-    }
-
-    return input;
-  }
-
-  private boolean isInvalidChoice(Integer choice, Set<Integer> choices) {
-    return !choices.contains(choice);
-  }
-
   public int getInputChoice() {
     try {
       return Integer.parseInt(reader.readLine());
@@ -85,6 +72,39 @@ public class CommandlineUI implements Output, Input {
     output.print(content);
   }
 
+  @Override
+  public void showWinner(Mark mark) {
+    output.println("Winner: " + mark.toString());
+  }
+
+  @Override
+  public void showDraw() {
+    output.println("Game ended in a draw.");
+  }
+
+  @Override
+  public void showNextPlayer(Mark mark) {
+    output.println("Next Player: " + mark);
+  }
+
+  @Override
+  public void showInvalidMoveMessage() {
+    output.println("Invalid move.");
+  }
+
+  private int getValidInput(Set<Integer> choices) {
+    Integer input = null;
+    while (input == null || isInvalidChoice(input, choices)) {
+      input = getInputChoice();
+    }
+
+    return input;
+  }
+
+  private boolean isInvalidChoice(Integer choice, Set<Integer> choices) {
+    return !choices.contains(choice);
+  }
+
   private String addSeparator(int sideLength, int position) {
     if (isEndOfRow(sideLength, position)) {
       return "\n";
@@ -110,25 +130,5 @@ public class CommandlineUI implements Output, Input {
     int numberOfDigits = boardLength.toString().length();
 
     return "%" + numberOfDigits + "s";
-  }
-
-  @Override
-  public void showWinner(Mark mark) {
-    output.println("Winner: " + mark.toString());
-  }
-
-  @Override
-  public void showDraw() {
-    output.println("Game ended in a draw.");
-  }
-
-  @Override
-  public void showNextPlayer(Mark mark) {
-    output.println("Next Player: " + mark);
-  }
-
-  @Override
-  public void showInvalidMoveMessage() {
-    output.println("Invalid move.");
   }
 }

@@ -1,9 +1,9 @@
 package de.christophgockel.tictactoe.cli;
 
-import de.christophgockel.tictactoe.helpers.BoardHelper;
 import de.christophgockel.tictactoe.game.Board;
 import de.christophgockel.tictactoe.game.Mark;
 import de.christophgockel.tictactoe.game.PlayerPairsFactory;
+import de.christophgockel.tictactoe.helpers.BoardHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,11 +43,6 @@ public class CommandlineUITest {
 
     assertThat(stdout(), containsString("1. Human vs. Human"));
     assertThat(stdout(), containsString("2. Human vs. Computer"));
-  }
-
-  private void prepareInput(String inputString) {
-    ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes(UTF_8));
-    ui = new CommandlineUI(input, new PrintStream(output));
   }
 
   @Test
@@ -96,10 +91,6 @@ public class CommandlineUITest {
     CommandlineUI ui = new CommandlineUI(input, new PrintStream(output));
 
     assertEquals(12, ui.getInputChoice());
-  }
-
-  private String stdout() {
-    return output.toString();
   }
 
   @Test
@@ -188,5 +179,14 @@ public class CommandlineUITest {
   public void showsAnInvalidMoveMessage() {
     ui.showInvalidMoveMessage();
     assertThat(stdout(), containsString("Invalid move."));
+  }
+
+  private void prepareInput(String inputString) {
+    ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes(UTF_8));
+    ui = new CommandlineUI(input, new PrintStream(output));
+  }
+
+  private String stdout() {
+    return output.toString();
   }
 }

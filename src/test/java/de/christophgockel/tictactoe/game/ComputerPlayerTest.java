@@ -145,7 +145,7 @@ public class ComputerPlayerTest {
     assertEquals(mark, board.getMarks().get(6));
   }
 
-  @Test (timeout = 3000)
+  @Test(timeout = 3000)
   public void firstMoveOnANew4x4BoardDoesNotTakeTooLong() {
     Board board = new Board(Board.Size.FourByFour);
 

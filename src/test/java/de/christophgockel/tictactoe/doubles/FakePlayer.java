@@ -27,7 +27,7 @@ public class FakePlayer implements Player {
     return mark;
   }
 
-  public void setNextMovesToPlay(Integer ... moves) {
+  public void setNextMovesToPlay(Integer... moves) {
     this.moves = new ArrayList<>(asList(moves));
   }
 }

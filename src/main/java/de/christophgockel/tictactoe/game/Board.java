@@ -3,12 +3,6 @@ package de.christophgockel.tictactoe.game;
 import java.util.*;
 
 public class Board {
-  public class InvalidMove extends RuntimeException {
-    public InvalidMove(int move) {
-      super("Invalid location for move: " + move);
-    }
-  }
-
   private final Size size;
   private final List<Mark> cells;
 
@@ -26,6 +20,17 @@ public class Board {
     this.cells = cells;
   }
 
+  public static Map<Integer, Size> getAvailableSizes() {
+    Map<Integer, Size> sizes = new HashMap<>();
+    int index = 1;
+
+    for (Size size : Size.values()) {
+      sizes.put(index++, size);
+    }
+
+    return sizes;
+  }
+
   public int getSideLength() {
     return size.getSideLength();
   }
@@ -36,10 +41,6 @@ public class Board {
 
   public boolean isPlayable() {
     return hasRemainingMoves() && !hasWinner();
-  }
-
-  private boolean hasRemainingMoves() {
-    return getFreeLocations().size() > 0;
   }
 
   public boolean hasWinner() {
@@ -69,10 +70,6 @@ public class Board {
     return new Board(size, newCells);
   }
 
-  private boolean isInvalidMove(int convertedMove) {
-    return convertedMove < 0 || convertedMove >= size.getNumberOfCells() || cells.get(convertedMove) != null;
-  }
-
   public Map<Integer, Mark> getMarks() {
     Map<Integer, Mark> marks = new HashMap<>();
 
@@ -83,15 +80,24 @@ public class Board {
     return Collections.unmodifiableMap(marks);
   }
 
-  public static Map<Integer, Size> getAvailableSizes() {
-    Map<Integer, Size> sizes = new HashMap<>();
-    int index = 1;
+  public List<Integer> getFreeLocations() {
+    List<Integer> locations = new ArrayList<>();
 
-    for(Size size : Size.values()) {
-      sizes.put(index++, size);
+    for (Map.Entry<Integer, Mark> entry : getMarks().entrySet()) {
+      if (entry.getValue() == null) {
+        locations.add(entry.getKey());
+      }
     }
 
-    return sizes;
+    return locations;
+  }
+
+  private boolean hasRemainingMoves() {
+    return getFreeLocations().size() > 0;
+  }
+
+  private boolean isInvalidMove(int convertedMove) {
+    return convertedMove < 0 || convertedMove >= size.getNumberOfCells() || cells.get(convertedMove) != null;
   }
 
   private List<Line> getLineCombinations() {
@@ -166,18 +172,6 @@ public class Board {
     return diagonals;
   }
 
-  public List<Integer> getFreeLocations() {
-    List<Integer> locations = new ArrayList<>();
-
-    for (Map.Entry<Integer, Mark> entry : getMarks().entrySet()) {
-      if (entry.getValue() == null) {
-        locations.add(entry.getKey());
-      }
-    }
-
-    return locations;
-  }
-
   public enum Size {
     ThreeByThree(3, "3x3"),
     FourByFour(4, "4x4");
@@ -200,6 +194,12 @@ public class Board {
 
     public String getDescription() {
       return description;
+    }
+  }
+
+  public class InvalidMove extends RuntimeException {
+    public InvalidMove(int move) {
+      super("Invalid location for move: " + move);
     }
   }
 

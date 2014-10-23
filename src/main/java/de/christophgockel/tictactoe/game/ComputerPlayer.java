@@ -2,7 +2,6 @@ package de.christophgockel.tictactoe.game;
 
 public class ComputerPlayer implements Player {
   private final Mark mark;
-
   private int initialMoveCount;
 
   public ComputerPlayer(Mark mark) {
@@ -17,14 +16,14 @@ public class ComputerPlayer implements Player {
     return board.setMove(move, mark);
   }
 
-  private int bestMove(Board board) {
-    RatedMove move = negamax(board, -1.0, 1.0, mark);
-    return move.move;
-  }
-
   @Override
   public Mark getMark() {
     return mark;
+  }
+
+  private int bestMove(Board board) {
+    RatedMove move = negamax(board, -1.0, 1.0, mark);
+    return move.move;
   }
 
   private RatedMove negamax(Board board, double alpha, double beta, Mark mark) {

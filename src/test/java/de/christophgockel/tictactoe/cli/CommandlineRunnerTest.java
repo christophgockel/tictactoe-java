@@ -1,11 +1,11 @@
 package de.christophgockel.tictactoe.cli;
 
-import de.christophgockel.tictactoe.helpers.BoardHelper;
 import de.christophgockel.tictactoe.doubles.FakePlayer;
 import de.christophgockel.tictactoe.doubles.SpyOutput;
 import de.christophgockel.tictactoe.game.Board;
 import de.christophgockel.tictactoe.game.Game;
 import de.christophgockel.tictactoe.game.Mark;
+import de.christophgockel.tictactoe.helpers.BoardHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,7 +78,7 @@ public class CommandlineRunnerTest {
       super(input, output);
     }
 
-    public void setChoicesToBeMade(Integer ... choices) {
+    public void setChoicesToBeMade(Integer... choices) {
       inputChoices = new ArrayList<>(Arrays.asList(choices));
     }
 

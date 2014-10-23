@@ -20,8 +20,8 @@ public class GameTest {
   public void setup() {
     playerOne = new FakePlayer(X);
     playerTwo = new FakePlayer(O);
-    board     = new Board();
-    output    = new SpyOutput();
+    board = new Board();
+    output = new SpyOutput();
 
     game = new Game(playerOne, playerTwo, board, output);
   }
@@ -76,7 +76,7 @@ public class GameTest {
     assertTrue(output.announcedDraw);
   }
 
-  @Test (expected = Game.Over.class)
+  @Test(expected = Game.Over.class)
   public void throwsWhenTryingToPlayFinishedGame() {
     prepareFinishedBoard();
     game.nextRound();
