@@ -55,4 +55,63 @@ public class GoldenMasterTest{
 
    assertEquals(expected, baos.toString());
   }
+
+  @Test
+  public void printsBoardAgainAfterDraw() {
+    FakePlayer playerOne = new FakePlayer(X);
+    playerOne.setNextMovesToPlay(1, 2, 6, 7, 9);
+
+
+    FakePlayer playerTwo = new FakePlayer(O);
+    playerTwo.setNextMovesToPlay(3, 4, 5, 8);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    Game game = new Game(playerOne, playerTwo, new Board(), new CommandlineUI(System.in, new PrintStream(baos)));
+
+    CommandlineRunner runner = new CommandlineRunner(null);
+    runner.play(game);
+
+    String expected = "1 | 2 | 3\n" +
+      "4 | 5 | 6\n" +
+      "7 | 8 | 9\n" +
+      "Next Player: X\n" +
+      "X | 2 | 3\n" +
+      "4 | 5 | 6\n" +
+      "7 | 8 | 9\n" +
+      "Next Player: O\n" +
+      "X | 2 | O\n" +
+      "4 | 5 | 6\n" +
+      "7 | 8 | 9\n" +
+      "Next Player: X\n" +
+      "X | X | O\n" +
+      "4 | 5 | 6\n" +
+      "7 | 8 | 9\n" +
+      "Next Player: O\n" +
+      "X | X | O\n" +
+      "O | 5 | 6\n" +
+      "7 | 8 | 9\n" +
+      "Next Player: X\n" +
+      "X | X | O\n" +
+      "O | 5 | X\n" +
+      "7 | 8 | 9\n" +
+      "Next Player: O\n" +
+      "X | X | O\n" +
+      "O | O | X\n" +
+      "7 | 8 | 9\n" +
+      "Next Player: X\n" +
+      "X | X | O\n" +
+      "O | O | X\n" +
+      "X | 8 | 9\n" +
+      "Next Player: O\n" +
+      "X | X | O\n" +
+      "O | O | X\n" +
+      "X | O | 9\n" +
+      "Next Player: X\n" +
+      "X | X | O\n" +
+      "O | O | X\n" +
+      "X | O | X\n" +
+      "Game ended in a draw.\n";
+
+    assertEquals(expected, baos.toString());
+  }
 }

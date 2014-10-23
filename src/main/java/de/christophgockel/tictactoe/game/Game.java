@@ -54,8 +54,9 @@ public class Game {
   }
 
   private void showEndResult() {
+    output.show(board);
+
     if (board.hasWinner()) {
-      output.show(board);
       output.showWinner(board.getWinner());
     } else {
       output.showDraw();
