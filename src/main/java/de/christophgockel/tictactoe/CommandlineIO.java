@@ -26,7 +26,7 @@ public class CommandlineIO implements Output, Input {
   @Override
   public void show(Board board) {
     Map<Integer, Mark> marks = board.getMarks();
-    int sideLength = (int) Math.sqrt(marks.size());
+    int sideLength = board.getSideLength();
     String content = "";
     String format = cellFormat(board);
 

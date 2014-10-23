@@ -1,6 +1,9 @@
 package de.christophgockel.tictactoe;
 
 public class Game {
+  public class Over extends RuntimeException {
+  }
+
   private Player currentPlayer;
   private Player otherPlayer;
   private Board board;
@@ -33,6 +36,14 @@ public class Game {
     }
   }
 
+  public boolean isPlayable() {
+    return board.isPlayable();
+  }
+
+  public Board getBoard() {
+    return board;
+  }
+
   private boolean isFinished() {
     return !board.isPlayable();
   }
@@ -51,20 +62,9 @@ public class Game {
     }
   }
 
-  public boolean isPlayable() {
-    return board.isPlayable();
-  }
-
-  public Board getBoard() {
-    return board;
-  }
-
   private void switchPlayers() {
     Player previousPlayer = currentPlayer;
     currentPlayer = otherPlayer;
     otherPlayer = previousPlayer;
-  }
-
-  public class Over extends RuntimeException {
   }
 }
