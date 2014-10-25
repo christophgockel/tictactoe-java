@@ -76,6 +76,15 @@ public class GameTest {
     assertTrue(output.announcedDraw);
   }
 
+  @Test
+  public void doesNotPlayARoundIfPlayerIsNotReady() {
+    playerOne.setNotReady();
+
+    game.nextRound();
+
+    assertNull(output.showedBoard);
+  }
+
   @Test(expected = Game.Over.class)
   public void throwsWhenTryingToPlayFinishedGame() {
     prepareFinishedBoard();

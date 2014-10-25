@@ -10,6 +10,11 @@ public class HumanPlayer implements Player {
   }
 
   @Override
+  public boolean isReady() {
+    return input.canProvideMove();
+  }
+
+  @Override
   public Board nextMove(Board board) {
     int move = input.getMove();
     return board.setMove(move, mark);

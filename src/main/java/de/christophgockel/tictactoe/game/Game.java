@@ -14,22 +14,23 @@ public class Game {
   }
 
   public void nextRound() {
-    try {
+    if (isOver()) {
+      throw new Over();
+    }
+
+    if (currentPlayer.isReady()) {
       showBoard();
 
-      if (isPlayable()) {
+      try {
         board = currentPlayer.nextMove(board);
-
         switchPlayers();
 
         if (isFinished()) {
           showEndResult();
         }
-      } else {
-        throw new Over();
+      } catch (Board.InvalidMove invalidMove) {
+        output.showInvalidMoveMessage();
       }
-    } catch (Board.InvalidMove invalidMove) {
-      output.showInvalidMoveMessage();
     }
   }
 
@@ -64,6 +65,10 @@ public class Game {
     Player previousPlayer = currentPlayer;
     currentPlayer = otherPlayer;
     otherPlayer = previousPlayer;
+  }
+
+  private boolean isOver() {
+    return !isPlayable();
   }
 
   public class Over extends RuntimeException {

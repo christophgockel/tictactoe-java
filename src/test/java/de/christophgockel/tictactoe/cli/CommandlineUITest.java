@@ -18,6 +18,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class CommandLineUITest {
   private ByteArrayOutputStream output;
@@ -143,6 +144,11 @@ public class CommandLineUITest {
     assertThat(stdout(), containsString("X | 2 | 3"));
     assertThat(stdout(), containsString("4 | X | 6"));
     assertThat(stdout(), containsString("7 | 8 | X"));
+  }
+
+  @Test
+  public void canProvideTheNextMove() {
+    assertTrue(ui.canProvideMove());
   }
 
   @Test

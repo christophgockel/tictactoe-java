@@ -45,6 +45,11 @@ public class CommandLineUI implements Output, Input {
   }
 
   @Override
+  public boolean canProvideMove() {
+    return true;
+  }
+
+  @Override
   public int getMove() {
     try {
       output.print("Next move: ");

@@ -11,9 +11,16 @@ import static java.util.Arrays.asList;
 public class FakePlayer implements Player {
   private final Mark mark;
   private LinkedList<Integer> moves = new LinkedList<>();
+  private boolean isReady;
 
   public FakePlayer(Mark mark) {
     this.mark = mark;
+    this.isReady = true;
+  }
+
+  @Override
+  public boolean isReady() {
+    return isReady;
   }
 
   @Override
@@ -28,5 +35,9 @@ public class FakePlayer implements Player {
 
   public void setNextMovesToPlay(Integer... moves) {
     this.moves = new LinkedList<>(asList(moves));
+  }
+
+  public void setNotReady() {
+    isReady = false;
   }
 }

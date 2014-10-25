@@ -9,6 +9,11 @@ public class ComputerPlayer implements Player {
   }
 
   @Override
+  public boolean isReady() {
+    return true;
+  }
+
+  @Override
   public Board nextMove(Board board) {
     initialMoveCount = board.getMoveCount();
 

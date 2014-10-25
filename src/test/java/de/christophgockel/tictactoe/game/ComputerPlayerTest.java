@@ -10,6 +10,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ComputerPlayerTest {
   private ComputerPlayer computer;
@@ -24,6 +25,11 @@ public class ComputerPlayerTest {
   @Test
   public void hasAMark() {
     assertEquals(mark, computer.getMark());
+  }
+
+  @Test
+  public void isAlwaysReady() {
+    assertTrue(computer.isReady());
   }
 
   @Test

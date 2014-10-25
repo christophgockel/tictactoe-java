@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class HumanPlayerTest {
   private Player player;
@@ -32,6 +34,18 @@ public class HumanPlayerTest {
     Board newBoard = player.nextMove(board);
 
     assertEquals(player.getMark(), nthMarkOnBoard(2, newBoard));
+  }
+
+  @Test
+  public void isReadyIfInputCanProvideAMove() {
+    input.enableNextMove();
+    assertTrue(player.isReady());
+  }
+
+  @Test
+  public void isNotReadyWhenInputCannotProvideAMove() {
+    input.doNotProvideNextMove();
+    assertFalse(player.isReady());
   }
 
   private Mark nthMarkOnBoard(int location, Board board) {
