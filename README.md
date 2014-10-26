@@ -1,8 +1,15 @@
 # Java Tic Tac Toe
 
-Build and execute with:
+Uses [Gradle](http://www.gradle.org/) as its build tool.
+
+You can build it with the `jar` target.  
+For playing the game, there's a `play` target.
+
+The [Gradle Wrapper](http://www.gradle.org/docs/current/userguide/gradle_wrapper.html) is packaged in this repository.
+
+To build and run the game you execute the following commands from the project root:
 
 ```
-$: mvn clean package
-$: java -jar target/tictactoe-1.0-SNAPSHOT.jar
+$: ./gradlew clean jar
+$: ./gradlew play
 ```
