@@ -1,11 +1,13 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'idea'
-
-group = 'de.christophgockel'
-version = '1.0-SNAPSHOT'
+apply plugin: 'application'
 
 description = "Tic Tac Toe"
+group       = 'de.christophgockel'
+version     = '1.0-SNAPSHOT'
+
+defaultTasks "clean", "jar"
 
 allprojects {
   sourceCompatibility = 1.7
@@ -17,5 +19,26 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version:'4.11'
+  testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': "de.christophgockel.tictactoe.cli.Main"
+  }
+}
+
+task(play, dependsOn: 'jar') << {
+  def command = [
+    'java',
+    '-jar', jar.archivePath.getPath()
+  ]
+
+  def process = new ProcessBuilder(command)
+                      .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                      .redirectInput(ProcessBuilder.Redirect.INHERIT)
+                      .redirectError(ProcessBuilder.Redirect.INHERIT)
+                      .start()
+
+  process.waitFor()
 }
