@@ -28,7 +28,7 @@ jar {
   }
 }
 
-task(play, dependsOn: 'jar') << {
+task(play, dependsOn: jar) << {
   def command = [
     'java',
     '-jar', jar.archivePath.getPath()
