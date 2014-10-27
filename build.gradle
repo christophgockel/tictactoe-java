@@ -28,6 +28,8 @@ jar {
   }
 }
 
+mainClassName = jar.manifest.getAttributes().get("Main-Class");
+
 task(play, dependsOn: jar) << {
   def command = [
     'java',
