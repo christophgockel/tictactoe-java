@@ -82,7 +82,7 @@ public class GameTest {
 
     game.nextRound();
 
-    assertNull(output.showedBoard);
+    assertEquals(playerOne.getMark(), output.announcedPlayer);
   }
 
   @Test(expected = Game.Over.class)
@@ -97,7 +97,7 @@ public class GameTest {
 
     game.nextRound();
 
-    assertEquals(playerOne.getMark(), output.announcedPlayer);
+    assertEquals(playerTwo.getMark(), output.announcedPlayer);
   }
 
   @Test

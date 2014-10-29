@@ -55,7 +55,7 @@ public class CommandLineRunnerTest {
     Board board = BoardHelper.createBoardWithMoves(Mark.X, 1, 2, 3);
     runner.play(new Game(playerOne, playerTwo, board, output));
 
-    assertEquals(null, output.announcedPlayer);
+    assertEquals(board, output.showedBoard);
   }
 
 

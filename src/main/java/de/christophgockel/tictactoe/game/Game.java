@@ -11,6 +11,7 @@ public class Game {
     this.otherPlayer = playerTwo;
     this.board = board;
     this.output = output;
+    showBoard();
   }
 
   public void nextRound() {
@@ -18,8 +19,8 @@ public class Game {
       throw new Over();
     }
 
+
     if (currentPlayer.isReady()) {
-      showBoard();
 
       try {
         board = currentPlayer.nextMove(board);
@@ -27,6 +28,8 @@ public class Game {
 
         if (isFinished()) {
           showEndResult();
+        } else {
+          showBoard();
         }
       } catch (Board.InvalidMove invalidMove) {
         output.showInvalidMoveMessage();
@@ -35,7 +38,7 @@ public class Game {
   }
 
   public boolean isPlayable() {
-    return board.isPlayable();
+    return board.isPlayable() && currentPlayer.isReady();
   }
 
   public Board getBoard() {
@@ -68,7 +71,7 @@ public class Game {
   }
 
   private boolean isOver() {
-    return !isPlayable();
+    return !board.isPlayable();
   }
 
   public class Over extends RuntimeException {
