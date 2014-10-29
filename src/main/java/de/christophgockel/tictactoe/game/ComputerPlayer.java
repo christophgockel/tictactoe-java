@@ -64,7 +64,7 @@ public class ComputerPlayer implements Player {
   }
 
   private boolean maximumSearchDepthReached(Board board) {
-    return searchDepthOf(board) > board.getSideLength();
+    return searchDepthOf(board) > board.getSideLength() + 3;
   }
 
   private int searchDepthOf(Board board) {
